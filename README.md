@@ -1,4 +1,5 @@
 # Planning Poker 🃏
+[![Netlify Status](https://api.netlify.com/api/v1/badges/91eee342-7358-40a3-a1e9-6b424e9cd4e1/deploy-status)](https://app.netlify.com/projects/planning-poker-crm/deploys)
 
 Uma aplicação moderna de Planning Poker para refinamento de histórias em equipes ágeis, construída com React, TypeScript, Vite e Liveblocks.
 
