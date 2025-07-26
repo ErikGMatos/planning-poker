@@ -418,6 +418,26 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@liveblocks/client@3.2.0", "@liveblocks/client@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@liveblocks/client/-/client-3.2.0.tgz#82b06037672c3de6b6c4a59c9dc8b13b665fcbd4"
+  integrity sha512-MVdveFveVJd12LaXhd65XEuc2blQzSwp3otMS5mp84S2NkqOC/b6a1E8ZX87yY3/FZyX6cPiA8uBwY5XeTElFQ==
+  dependencies:
+    "@liveblocks/core" "3.2.0"
+
+"@liveblocks/core@3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@liveblocks/core/-/core-3.2.0.tgz#5826303bc9c9b366632c16125ec5a254660a56ba"
+  integrity sha512-B/P+5v/G1v8fgdyXFkSQbvh9tXghLM8W+EZuTPKzJnQW7zmUsIoIJ8OnJu0ZAnXLH/wCA0Rac1XMTKx/we0DnA==
+
+"@liveblocks/react@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@liveblocks/react/-/react-3.2.0.tgz#06e56a7a9690798f98b163f375e3aec45a1e409f"
+  integrity sha512-8TJ1yLM831h/t7aVEPflzr4xsu5YpCbmJAuI0/Aad/BNDnBBDUTGIiQ0mUBd+RVqAizQxi2Wr9Do4RhYJD3vTQ==
+  dependencies:
+    "@liveblocks/client" "3.2.0"
+    "@liveblocks/core" "3.2.0"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -438,6 +458,11 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
+
+"@remix-run/router@1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.23.0.tgz#35390d0e7779626c026b11376da6789eb8389242"
+  integrity sha512-O3rHJzAQKamUz1fvE0Qaw0xSFqsA/yafi2iqeE0pvdFtCO1viYx8QL6f3Ln/aCCTLxs68SLf0KPM9eSeM8yBnA==
 
 "@rolldown/pluginutils@1.0.0-beta.27":
   version "1.0.0-beta.27"
@@ -1263,6 +1288,11 @@ nanoid@^3.3.11:
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.11.tgz#4f4f112cefbe303202f2199838128936266d185b"
   integrity sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==
 
+nanoid@^5.1.5:
+  version "5.1.5"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-5.1.5.tgz#f7597f9d9054eb4da9548cdd53ca70f1790e87de"
+  integrity sha512-Ir/+ZpE9fDsNH0hQ3C68uyThDXzYcim2EqcZ8zn8Chtt1iylPT9xXJB0kPCnqzgcEGikO9RxSrh63MsmVCU7Fw==
+
 natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
@@ -1366,6 +1396,21 @@ react-refresh@^0.17.0:
   version "0.17.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.17.0.tgz#b7e579c3657f23d04eccbe4ad2e58a8ed51e7e53"
   integrity sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==
+
+react-router-dom@^6.23.0:
+  version "6.30.1"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.30.1.tgz#da2580c272ddb61325e435478566be9563a4a237"
+  integrity sha512-llKsgOkZdbPU1Eg3zK8lCn+sjD9wMRZZPuzmdWWX5SUs8OFkN5HnFVC0u5KMeMaC9aoancFI/KoLuKPqN+hxHw==
+  dependencies:
+    "@remix-run/router" "1.23.0"
+    react-router "6.30.1"
+
+react-router@6.30.1:
+  version "6.30.1"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.30.1.tgz#ecb3b883c9ba6dbf5d319ddbc996747f4ab9f4c3"
+  integrity sha512-X1m21aEmxGXqENEPG3T6u0Th7g0aS4ZmoNynhbs+Cn+q+QGTLt+d5IQ2bHAXKzKcxGJjxACpVbnYQSCRcfxHlQ==
+  dependencies:
+    "@remix-run/router" "1.23.0"
 
 react@^19.1.0:
   version "19.1.0"
