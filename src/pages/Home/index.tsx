@@ -35,9 +35,6 @@ export const Home: React.FC = () => {
           <h1 className="home-title">
             Planning Poker
           </h1>
-          <p className="home-subtitle">
-            Ferramenta colaborativa para estimativa de histórias em equipes ágeis
-          </p>
         </div>
 
         {/* Main Card */}
