@@ -26,4 +26,5 @@ export const {
   useUpdateMyPresence,
   useMutation,
   useSelf,
+  useStatus,
 } = createRoomContext<Presence, Storage>(client);

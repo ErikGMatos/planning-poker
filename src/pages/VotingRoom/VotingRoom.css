@@ -1,0 +1,282 @@
+.voting-room-container {
+  padding: 1rem;
+}
+
+.voting-room-content {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.voting-room-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.voting-room-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.voting-room-subtitle {
+  color: #4b5563;
+}
+
+.voting-room-subtitle .user-name {
+  font-weight: 600;
+}
+
+.voting-room-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.voting-room-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.voting-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.vote-options-card {
+  margin-bottom: 1rem;
+}
+
+.vote-options-header {
+  margin-bottom: 1rem;
+}
+
+.vote-options-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.vote-options-description {
+  color: #4b5563;
+}
+
+.vote-options-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.vote-option-btn {
+  height: 4rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  border-radius: 0.375rem;
+  border: 2px solid #d1d5db;
+  background-color: white;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vote-option-btn:hover {
+  border-color: #93c5fd;
+  background-color: #dbeafe;
+}
+
+.vote-option-btn.selected {
+  border-color: #3b82f6;
+  background-color: #3b82f6;
+  color: white;
+}
+
+.vote-option-btn.selected:hover {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+.action-buttons-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.action-buttons-container {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.reveal-btn {
+  flex: 1;
+}
+
+.reset-btn {
+  padding: 0.5rem 1.5rem;
+}
+
+.results-card {
+  margin-top: 1.5rem;
+}
+
+.results-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+}
+
+.result-item {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.result-item.average {
+  background-color: #dbeafe;
+}
+
+.result-item.min {
+  background-color: #dcfce7;
+}
+
+.result-item.max {
+  background-color: #fef2f2;
+}
+
+.result-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.result-value.average {
+  color: #2563eb;
+}
+
+.result-value.min {
+  color: #16a34a;
+}
+
+.result-value.max {
+  color: #dc2626;
+}
+
+.result-label {
+  font-size: 0.875rem;
+}
+
+.result-label.average {
+  color: #2563eb;
+}
+
+.result-label.min {
+  color: #16a34a;
+}
+
+.result-label.max {
+  color: #dc2626;
+}
+
+.participants-section {
+  position: static;
+}
+
+.participants-card {
+  position: static;
+}
+
+.participants-header {
+  margin-bottom: 1rem;
+}
+
+.participants-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.participants-count {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.participants-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.participant-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+}
+
+.participant-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.participant-name {
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.participant-status {
+  display: flex;
+  align-items: center;
+}
+
+/* Responsividade */
+@media (min-width: 640px) {
+  .action-buttons-container {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 768px) {
+  .voting-room-header {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .vote-options-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  
+  .results-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .vote-options-grid {
+    grid-template-columns: repeat(9, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .voting-room-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+  
+  .participants-card {
+    position: sticky;
+    top: 1rem;
+  }
+}

@@ -1,0 +1,106 @@
+.room-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.room-content {
+  max-width: 28rem;
+  width: 100%;
+}
+
+.room-error-card {
+  text-align: center;
+}
+
+.room-error-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #dc2626;
+  margin-bottom: 0.5rem;
+}
+
+.room-error-message {
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+.room-error-btn {
+  width: 100%;
+}
+
+.room-join-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.room-join-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.room-join-subtitle {
+  color: #4b5563;
+}
+
+.room-id {
+  font-family: monospace;
+  font-weight: 600;
+  background-color: #f3f4f6;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.room-join-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.room-input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.room-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.room-input {
+  text-align: center;
+}
+
+.room-join-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.room-loading-icon {
+  display: inline-block;
+}
+
+.room-back-link {
+  text-align: center;
+}
+
+.room-back-btn {
+  font-size: 0.875rem;
+  color: #6b7280;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.room-back-btn:hover {
+  color: #374151;
+}
