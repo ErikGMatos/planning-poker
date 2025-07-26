@@ -14,7 +14,7 @@ type Storage = {
 
 // Cria o cliente com sua API Key pública
 const client = createClient({
-  publicApiKey: "pk_dev_OTTh6VRfxxQkq5GkLqatRI0yHs5bmeUanBwUF7QAVtYPtLkuRGpqCESwK5GdDEmP",
+  publicApiKey: import.meta.env.VITE_LIVEBLOCKS_PUBLIC_KEY,
 });
 
 // Cria o contexto com tipagem
