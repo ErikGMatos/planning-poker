@@ -51,16 +51,16 @@ export const VotingRoom: React.FC = () => {
       <div className="gradient-bg voting-room-container">
         <div className="voting-room-content">
           <div className="card card-shadow" style={{ maxWidth: '28rem', margin: '0 auto', textAlign: 'center' }}>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#dc2626', marginBottom: '1rem' }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#f87171', marginBottom: '1rem' }}>
               {isConnectionIssue ? '🔌 Problema de Conexão' : '🚫 Sala Lotada'}
             </h2>
-            <p style={{ color: '#4b5563', marginBottom: '1rem' }}>
+            <p style={{ color: '#cbd5e1', marginBottom: '1rem' }}>
               {isConnectionIssue ? 
                 'Não foi possível conectar à sala. Isso pode indicar que a sala está lotada ou há problemas de rede.' :
                 `Esta sala já atingiu o limite máximo de ${MAX_PARTICIPANTS} participantes.`
               }
             </p>
-            <p style={{ color: '#6b7280', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
+            <p style={{ color: '#94a3b8', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
               {isConnectionIssue ? 
                 'Verifique sua conexão ou tente novamente em alguns instantes.' :
                 'Tente novamente mais tarde ou crie uma nova sala.'
@@ -205,8 +205,8 @@ export const VotingRoom: React.FC = () => {
 
               {/* Custom Input */}
               {showCustomInput && (
-                <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: '#f9fafb', borderRadius: '0.5rem' }}>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', marginBottom: '0.5rem' }}>
+                <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: '#374151', borderRadius: '0.5rem', border: '1px solid #4b5563' }}>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', marginBottom: '0.5rem', color: '#cbd5e1' }}>
                     Digite um valor personalizado:
                   </label>
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -320,7 +320,7 @@ export const VotingRoom: React.FC = () => {
                 {allUsers.length >= MAX_PARTICIPANTS - 2 && (
                   <p style={{ 
                     fontSize: '0.75rem', 
-                    color: allUsers.length >= MAX_PARTICIPANTS - 1 ? '#dc2626' : '#f59e0b',
+                    color: allUsers.length >= MAX_PARTICIPANTS - 1 ? '#f87171' : '#fbbf24',
                     marginTop: '0.25rem'
                   }}>
                     {allUsers.length === MAX_PARTICIPANTS ? 
