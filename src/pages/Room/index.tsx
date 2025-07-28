@@ -16,12 +16,11 @@ export const Room: React.FC = () => {
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
-    if (!name) {
-      return;
-    } else {
+    // Só entra automaticamente se já tem um nome salvo no localStorage
+    if (storedName && storedName.trim()) {
       setReady(true);
     }
-  }, [name, navigate]);
+  }, [storedName]);
 
   const handleJoinRoom = () => {
     if (!name.trim()) {
