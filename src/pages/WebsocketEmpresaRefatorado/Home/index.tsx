@@ -1,45 +1,37 @@
-import { nanoid } from "nanoid";
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import "./Home.css";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { WebsocketProvider, useWebsocket } from '../WebsocketContext';
+import '../../Home/Home.css';
 
-export const Home: React.FC = () => {
+const HomeContent: React.FC = () => {
   const navigate = useNavigate();
+  const { createRoom, joinRoom, connect } = useWebsocket();
+  const [name, setName] = useState('');
 
-  // Tenta pegar nome no localStorage
-  const storedName = localStorage.getItem("userName") || "";
-  const [name, setName] = React.useState(storedName);
-
-  // Cria sala nova (id aleatório)
-  const createRoom = () => {
-    if (!name.trim()) {
-      alert("Por favor, digite seu nome");
-      return;
+  const handleCreate = async () => {
+    await connect();
+    const newRoom = await createRoom(name, "");
+    await joinRoom(newRoom.id, name);
+    if (newRoom.id) {
+      navigate(`/refatorado-room/${newRoom.id}`);
     }
-    const roomId = nanoid(6);
-    localStorage.setItem("userName", name.trim());
-    navigate(`/room/${roomId}`);
   };
 
-  // // Cria sala nova com websocket da empresa
-  // const createWebsocketRoom = () => {
-  //   if (!name.trim()) {
-  //     alert("Por favor, digite seu nome");
-  //     return;
+  // const handleCreateRoom = async () => {
+  //   try {
+  //     const room = await createRoom(nanoid(6), '');
+  //     navigate(`/refatorado-room/${room.id}`);
+  //   } catch (error) {
+  //     console.error('Erro ao criar sala:', error);
+  //     alert('Erro ao criar sala');
+  //   } finally {
+  //     // setLoading(false);
   //   }
-  //   const roomId = nanoid(6);
-  //   localStorage.setItem("userName", name.trim());
-  //   navigate(`/websocket-room/${roomId}`);
-  // };
-
-  // // Navega para versão refatorada
-  // const goToRefatorado = () => {
-  //   navigate('/refatorado');
   // };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      createRoom();
+      handleCreate();
     }
   };
 
@@ -79,32 +71,13 @@ export const Home: React.FC = () => {
                 className="input home-input"
               />
             </div>
-            
-            {/* <div className="home-buttons"> */}
               <button 
-                onClick={createRoom} 
+                onClick={handleCreate} 
                 disabled={!name.trim()}
                 className="btn btn-primary btn-lg home-create-btn"
               >
                 Criar Nova Sala
               </button>
-              
-              {/* <button 
-                onClick={createWebsocketRoom} 
-                disabled={!name.trim()}
-                className="btn btn-secondary btn-lg home-create-btn"
-              >
-                Criar Nova Sala (Websocket Empresa)
-              </button>
-
-              <button 
-                onClick={goToRefatorado}
-                className="btn btn-success btn-lg home-create-btn"
-              >
-                🚀 Versão Refatorada (Websocket)
-              </button> */}
-            {/* </div> */}
-            
             <div className="home-help-text">
               <p>
                 Ou entre em uma sala existente através do link compartilhado
@@ -118,5 +91,13 @@ export const Home: React.FC = () => {
 
       </div>
     </div>
+  );
+};
+
+export const WebsocketEmpresaRefatorado: React.FC = () => {
+  return (
+    <WebsocketProvider>
+      <HomeContent />
+    </WebsocketProvider>
   );
 };
