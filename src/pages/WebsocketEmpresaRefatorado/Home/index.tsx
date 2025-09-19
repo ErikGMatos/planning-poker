@@ -6,8 +6,8 @@ import '../../Home/Home.css';
 
 const HomeContent: React.FC = () => {
   const navigate = useNavigate();
-  const { createRoom, joinRoom, connect } = useWebsocket();
-  const [name, setName] = useState('');
+  const { createRoom, joinRoom, connect, me } = useWebsocket();
+  const [name, setName] = useState(me?.name || '');
 
   const handleCreate = async () => {
     await connect();
