@@ -44,11 +44,15 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     conn.onreconnected(async () => {
       setIsConnected(true);
-      if (room && me) {
+      // Usar dados do localStorage em vez do estado atual
+      const savedRoom = JSON.parse(localStorage.getItem(LS_ROOM) || "null");
+      const savedMe = JSON.parse(localStorage.getItem(LS_ME) || "null");
+      
+      if (savedRoom && savedMe) {
         try {
-          await SimpleWebsocketService.joinRoom({ roomId: room.id, user: me });
-          if (me.vote != null) {
-            await SimpleWebsocketService.vote({ roomId: room.id, userId: me.id, value: me.vote });
+          await SimpleWebsocketService.joinRoom({ roomId: savedRoom.id, user: savedMe });
+          if (savedMe.vote != null) {
+            await SimpleWebsocketService.vote({ roomId: savedRoom.id, userId: savedMe.id, value: savedMe.vote });
           }
         } catch(error) {
           console.error('Erro ao reconectar:', error);
@@ -57,7 +61,7 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({ children 
     });
 
     conn.onclose(() => setIsConnected(false));
-  }, [room, me]);
+  }, []);
 
   const connect = useCallback(async () => {
     try {
@@ -65,17 +69,21 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({ children 
       setIsConnected(connection.state === HubConnectionState.Connected);
       setupListeners();
 
-      if (room && me) {
-        await SimpleWebsocketService.joinRoom({ roomId: room.id, user: me });
-        if (me.vote != null) {
-          await SimpleWebsocketService.vote({ roomId: room.id, userId: me.id, value: me.vote });
+      // Usar dados do localStorage para reconexão
+      const savedRoom = JSON.parse(localStorage.getItem(LS_ROOM) || "null");
+      const savedMe = JSON.parse(localStorage.getItem(LS_ME) || "null");
+      
+      if (savedRoom && savedMe) {
+        await SimpleWebsocketService.joinRoom({ roomId: savedRoom.id, user: savedMe });
+        if (savedMe.vote != null) {
+          await SimpleWebsocketService.vote({ roomId: savedRoom.id, userId: savedMe.id, value: savedMe.vote });
         }
       }
     } catch(error) {
       console.error('Erro ao conectar:', error);
       setIsConnected(false);
     }
-  }, [setupListeners, room, me]);
+  }, [setupListeners]);
 
   const disconnect = useCallback(async () => {
     await SimpleWebsocketService.disconnect();
@@ -94,26 +102,27 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({ children 
     return result;
   };
 
-  const joinRoom = async (roomId: string, user: User) => {
+  const joinRoom = useCallback(async (roomId: string, user: User) => {
     await SimpleWebsocketService.joinRoom({ roomId, user });
+    // Sempre atualizar o me com o usuário fornecido
     setMe(user);
-  };
+  }, []);
 
-  const leaveRoom = async () => {
+  const leaveRoom = useCallback(async () => {
     if (room && me) await SimpleWebsocketService.leaveRoom({ roomId: room.id, userId: me.id });
     setMe(null);
-  };
+  }, [room, me]);
 
-  const vote = async ({userId, roomId, vote}: {userId: string, roomId: string, vote: number}) => {
+  const vote = useCallback(async ({userId, roomId, vote}: {userId: string, roomId: string, vote: number}) => {
     if (room && me) {
       await SimpleWebsocketService.vote({ roomId, userId, vote });
       setMe((prev) => (prev ? { ...prev, vote } : null));
     }
-  };
+  }, [room, me]);
 
-  const reveal = async () => room && SimpleWebsocketService.reveal({ roomId: room.id });
-  const reset = async () => room && SimpleWebsocketService.reset({ roomId: room.id });
-  const getState = async () => SimpleWebsocketService.getState();
+  const reveal = useCallback(async () => room && SimpleWebsocketService.reveal({ roomId: room.id }), [room]);
+  const reset = useCallback(async () => room && SimpleWebsocketService.reset({ roomId: room.id }), [room]);
+  const getState = useCallback(async () => SimpleWebsocketService.getState(), []);
 
   return (
     <WebsocketContext.Provider

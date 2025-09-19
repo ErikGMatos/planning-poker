@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { WebsocketProvider } from '../WebsocketContext';
 
@@ -15,33 +15,57 @@ const RoomContent: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
 
-  // const enterAutomatically = useCallback(async () => {
-  //   await disconnect();
-  //   await connect();
-  //   await joinRoom(id, {id: me?.id??'', name: me?.name??'', vote: me?.vote??null});
-  //   setReady(true);
-  // }, [connect, disconnect, id, joinRoom, me?.id, me?.name, me?.vote]);
+  const enterAutomatically = useCallback(async () => {
+    if (!me || !me.name.trim() || ready) return;
+    
+    setLoading(true);
+    try {
+      await disconnect();
+      await connect();
+      await joinRoom(id, me);
+      setReady(true);
+    } catch (error) {
+      console.error('Erro ao entrar automaticamente:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [connect, disconnect, id, joinRoom, me, ready]);
 
-  // React.useEffect(() => {
-  //   if (me && me.name.trim()) {
-  //     enterAutomatically();
-  //   }
-  // }, [enterAutomatically, me]);
+  React.useEffect(() => {
+    if (me && me.name.trim() && !ready) {
+      setName(me.name);
+      enterAutomatically();
+    }
+  }, [me, ready, enterAutomatically]);
 
   const handleJoinRoom = async () => {
     if (!name.trim()) {
       alert("Nome obrigatório");
       return;
     }
+    
     setLoading(true);
-    await disconnect();
-    await connect();
-    await joinRoom(id, {id: me?.id??'', name: name.trim(), vote: me?.vote??null});
-    setName(name.trim());
-    setTimeout(() => {
+    try {
+      await disconnect();
+      await connect();
+      
+      // Preservar o ID existente se disponível, senão criar novo
+      const userId = me?.id || crypto.randomUUID();
+      const userVote = me?.vote || null;
+      
+      await joinRoom(id, {
+        id: userId,
+        name: name.trim(),
+        vote: userVote
+      });
+      
       setReady(true);
+    } catch (error) {
+      console.error('Erro ao entrar na sala:', error);
+      alert('Erro ao entrar na sala. Tente novamente.');
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
 
 

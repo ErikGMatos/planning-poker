@@ -7,8 +7,6 @@ const MAX_PARTICIPANTS = 10;
 export const VotingRoom: React.FC = () => {
 
   const { room, me, vote: doVote, reveal: doReveal, reset: doReset } = useWebsocket();
-  
-console.log({room})
   const [copied, setCopied] = useState(false);
   const [customValue, setCustomValue] = useState("");
   const [showCustomInput, setShowCustomInput] = useState(false);
