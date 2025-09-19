@@ -11,11 +11,11 @@ interface WebsocketContextType {
   connect: () => Promise<void>;
   disconnect: () => Promise<void>;
   createRoom: (name: string, description: string) => Promise<Room>;
-  joinRoom: (roomId: string, userName: string) => Promise<void>;
+  joinRoom: (roomId: string, user: User) => Promise<void>;
   leaveRoom: () => Promise<void>;
-  vote: (value: number) => Promise<void>;
-  reveal: () => Promise<void>;
-  reset: () => Promise<void>;
+  vote: ({userId, roomId, vote}: {userId: string, roomId: string, vote: number}) => Promise<void>;
+  reveal: ({ roomId }: {roomId: string}) => Promise<void>;
+  reset: ({ roomId }: {roomId: string}) => Promise<void>;
   getState: () => Promise<HubConnectionState>;
 }
 
@@ -116,9 +116,8 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({ children 
     return result;
   };
 
-  const joinRoom = async (roomId: string, userName: string) => {
-    const user: User = { id: `user_${Date.now()}_${Math.random().toString(36).slice(2)}`, name: userName, vote: null };
-    await SimpleWebsocketService.joinRoom({ roomId, user });
+  const joinRoom = async (roomId: string, user: User) => {
+    await SimpleWebsocketService.joinRoom({ roomId, userId: user.id, name: user.name });
     setMe(user);
   };
 
@@ -127,10 +126,10 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({ children 
     setMe(null);
   };
 
-  const vote = async (value: number) => {
+  const vote = async ({userId, roomId, vote}: {userId: string, roomId: string, vote: number}) => {
     if (room && me) {
-      await SimpleWebsocketService.vote({ roomId: room.id, userId: me.id, value });
-      setMe((prev) => (prev ? { ...prev, vote: value } : null));
+      await SimpleWebsocketService.vote({ roomId, userId, vote });
+      setMe((prev) => (prev ? { ...prev, vote } : null));
     }
   };
 

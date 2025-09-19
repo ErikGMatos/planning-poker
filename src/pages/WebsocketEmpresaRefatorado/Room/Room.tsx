@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { WebsocketProvider } from '../WebsocketContext';
 import { useWebsocket } from '../WebsocketContext';
@@ -9,23 +9,23 @@ import '../../Room/Room.css';
 const RoomContent: React.FC = () => {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { joinRoom, connect, disconnect } = useWebsocket();
-  const storedName = React.useMemo(() => localStorage.getItem("userName") || "", []);
+  const { joinRoom, connect, disconnect, me } = useWebsocket();
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
 
-  React.useEffect(() => {
-    const enterAutomatically = async () => {
-      await disconnect();
-      await connect();
-      await joinRoom(id, storedName.trim());
-      setReady(true);
-    }
-    if (storedName && storedName.trim()) {
-      enterAutomatically();
-    }
-  }, [storedName]);
+  // const enterAutomatically = useCallback(async () => {
+  //   await disconnect();
+  //   await connect();
+  //   await joinRoom(id, {id: me?.id??'', name: me?.name??'', vote: me?.vote??null});
+  //   setReady(true);
+  // }, [connect, disconnect, id, joinRoom, me?.id, me?.name, me?.vote]);
+
+  // React.useEffect(() => {
+  //   if (me && me.name.trim()) {
+  //     enterAutomatically();
+  //   }
+  // }, [enterAutomatically, me]);
 
   const handleJoinRoom = async () => {
     if (!name.trim()) {

@@ -11,23 +11,11 @@ const HomeContent: React.FC = () => {
   const handleCreate = async () => {
     await connect();
     const newRoom = await createRoom(name, "");
-    await joinRoom(newRoom.id, name);
+    await joinRoom(newRoom.id, {id: crypto.randomUUID().toString(), name, vote: null});
     if (newRoom.id) {
       navigate(`/refatorado-room/${newRoom.id}`);
     }
   };
-
-  // const handleCreateRoom = async () => {
-  //   try {
-  //     const room = await createRoom(nanoid(6), '');
-  //     navigate(`/refatorado-room/${room.id}`);
-  //   } catch (error) {
-  //     console.error('Erro ao criar sala:', error);
-  //     alert('Erro ao criar sala');
-  //   } finally {
-  //     // setLoading(false);
-  //   }
-  // };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {

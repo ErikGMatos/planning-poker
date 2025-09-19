@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useWebsocket } from "../WebsocketContext";
-import { useNavigate } from "react-router-dom";
 import "../../VotingRoom/VotingRoom.css";
 
 const MAX_PARTICIPANTS = 10;
@@ -8,8 +7,8 @@ const MAX_PARTICIPANTS = 10;
 export const VotingRoom: React.FC = () => {
 
   const { room, me, vote: doVote, reveal: doReveal, reset: doReset } = useWebsocket();
-  const navigate = useNavigate();
-
+  
+console.log({room})
   const [copied, setCopied] = useState(false);
   const [customValue, setCustomValue] = useState("");
   const [showCustomInput, setShowCustomInput] = useState(false);
@@ -68,14 +67,14 @@ export const VotingRoom: React.FC = () => {
       return;
     }
     const voteValue = typeof opt === "number" ? opt : null;
-    if (voteValue !== null) doVote(voteValue);
+    if (voteValue !== null) doVote({userId: me.id, roomId: room.id, vote: voteValue});
     setShowCustomInput(false);
   };
 
   const handleCustomVote = () => {
     const value = parseInt(customValue);
     if (!isNaN(value) && value > 0) {
-      doVote(value);
+      doVote({userId: me.id, roomId: room.id, vote: value});
       setShowCustomInput(false);
       setCustomValue("");
     }
@@ -89,7 +88,7 @@ export const VotingRoom: React.FC = () => {
     }
   };
 
-  const handleReset = () => doReset();
+  const handleReset = () => doReset({roomId: room.id});
 
   const copyRoomLink = async () => {
     try {
