@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useWebsocket } from "../WebsocketContext";
 import "../../VotingRoom/VotingRoom.css";
+import { useWebsocket } from "../useWebsocket";
 
 const MAX_PARTICIPANTS = 10;
 
@@ -100,7 +100,7 @@ console.log({room})
     }
   };
 
-  const reveal = room.reveal ?? false;
+  const reveal = room.status === 2;
 
   return (
     <div className="gradient-bg voting-room-container">
@@ -188,7 +188,7 @@ console.log({room})
             <div className="card action-buttons-card">
               <div className="action-buttons-container">
                 <button
-                  onClick={() => doReveal()}
+                  onClick={() => doReveal({roomId: room.id})}
                   disabled={reveal}
                   className="btn btn-primary btn-lg reveal-btn"
                 >

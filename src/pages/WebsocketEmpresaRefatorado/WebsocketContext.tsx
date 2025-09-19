@@ -1,31 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
+import React, { useState, useCallback, useEffect, type ReactNode } from "react";
 import SimpleWebsocketService from "./WebsocketService";
 import { type Room, type User, SocketMethods } from "./types";
 import { HubConnectionState } from "@microsoft/signalr";
-
-interface WebsocketContextType {
-  room: Room | null;
-  me: User | null;
-  isConnected: boolean;
-  connect: () => Promise<void>;
-  disconnect: () => Promise<void>;
-  createRoom: (name: string, description: string) => Promise<Room>;
-  joinRoom: (roomId: string, user: User) => Promise<void>;
-  leaveRoom: () => Promise<void>;
-  vote: ({userId, roomId, vote}: {userId: string, roomId: string, vote: number}) => Promise<void>;
-  reveal: ({ roomId }: {roomId: string}) => Promise<void>;
-  reset: ({ roomId }: {roomId: string}) => Promise<void>;
-  getState: () => Promise<HubConnectionState>;
-}
-
-const WebsocketContext = createContext<WebsocketContextType | null>(null);
-
-export const useWebsocket = () => {
-  const ctx = useContext(WebsocketContext);
-  if (!ctx) throw new Error("useWebsocket deve ser usado dentro de WebsocketProvider");
-  return ctx;
-};
+import { WebsocketContext } from "./WebsocketContextInstance";
 
 // localStorage keys
 const LS_ROOM = "ws_room";
@@ -117,7 +95,7 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({ children 
   };
 
   const joinRoom = async (roomId: string, user: User) => {
-    await SimpleWebsocketService.joinRoom({ roomId, userId: user.id, name: user.name });
+    await SimpleWebsocketService.joinRoom({ roomId, user });
     setMe(user);
   };
 
@@ -145,3 +123,4 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({ children 
     </WebsocketContext.Provider>
   );
 };
+

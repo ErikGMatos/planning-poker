@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { WebsocketProvider } from '../WebsocketContext';
-import { useWebsocket } from '../WebsocketContext';
+
 import { VotingRoom } from '../VotingRoom/VotingRoom';
 import '../../Room/Room.css';
+import { useWebsocket } from '../useWebsocket';
 
 
 const RoomContent: React.FC = () => {
@@ -35,8 +36,7 @@ const RoomContent: React.FC = () => {
     setLoading(true);
     await disconnect();
     await connect();
-    await joinRoom(id, name.trim());
-    localStorage.setItem("userName", name.trim());
+    await joinRoom(id, {id: me?.id??'', name: name.trim(), vote: me?.vote??null});
     setName(name.trim());
     setTimeout(() => {
       setReady(true);

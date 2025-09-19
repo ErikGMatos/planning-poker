@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { WebsocketProvider, useWebsocket } from '../WebsocketContext';
+import { WebsocketProvider } from '../WebsocketContext';
+import { useWebsocket } from '../useWebsocket';
 import '../../Home/Home.css';
 
 const HomeContent: React.FC = () => {
@@ -11,7 +12,8 @@ const HomeContent: React.FC = () => {
   const handleCreate = async () => {
     await connect();
     const newRoom = await createRoom(name, "");
-    await joinRoom(newRoom.id, {id: crypto.randomUUID().toString(), name, vote: null});
+    const userId = crypto.randomUUID().toString();
+    await joinRoom(newRoom.id, {id: userId, name, vote: null});
     if (newRoom.id) {
       navigate(`/refatorado-room/${newRoom.id}`);
     }
