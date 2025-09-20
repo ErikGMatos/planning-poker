@@ -1,10 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HubConnectionBuilder, HttpTransportType, HubConnection, HubConnectionState } from "@microsoft/signalr";
-import { SocketMethods } from "./types";
+import {
+  HubConnectionBuilder,
+  HttpTransportType,
+  HubConnection,
+  HubConnectionState,
+} from '@microsoft/signalr';
+import { SocketMethods } from './types';
 
 class SimpleWebsocketService {
   private connection: HubConnection | null = null;
-  private readonly hubUrl = "https://hhub.webmotors.com.br/PlanningPoker.Api/planingHub";
+  private readonly hubUrl =
+    'https://hhub.webmotors.com.br/PlanningPoker.Api/planingHub';
 
   get state() {
     return this.connection?.state ?? HubConnectionState.Disconnected;
@@ -43,7 +49,7 @@ class SimpleWebsocketService {
   // Métodos invoke
   // -------------------------
   private ensureConnection() {
-    if (!this.connection) throw new Error("Não conectado ao WebSocket");
+    if (!this.connection) throw new Error('Não conectado ao WebSocket');
   }
 
   async createRoom(command: unknown) {

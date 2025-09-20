@@ -20,16 +20,16 @@ export const RoomStatus = {
 
 export const SocketMethods = {
   // Eventos recebidos
-  Voted: "Voted",
-  UserChanged: "UserChanged", 
-  Revealed: "Revealed",
-  Reseted: "Reseted",
-  
+  Voted: 'Voted',
+  UserChanged: 'UserChanged',
+  Revealed: 'Revealed',
+  Reseted: 'Reseted',
+
   // Métodos para invocar
-  CreateRoom: "CreateRoomAsync",
-  JoinRoomAsync: "JoinRoomAsync",
-  LeftRoomAsync: "LeftRoomAsync",
-  Vote: "VoteAsync",
-  Reveal: "RevealAsync",
-  Reset: "ResetAsync",
+  CreateRoom: 'CreateRoomAsync',
+  JoinRoomAsync: 'JoinRoomAsync',
+  LeftRoomAsync: 'LeftRoomAsync',
+  Vote: 'VoteAsync',
+  Reveal: 'RevealAsync',
+  Reset: 'ResetAsync',
 } as const;

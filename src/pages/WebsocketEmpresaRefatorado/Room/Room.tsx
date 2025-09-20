@@ -6,7 +6,6 @@ import { VotingRoom } from '../VotingRoom/VotingRoom';
 import '../../Room/Room.css';
 import { useWebsocket } from '../useWebsocket';
 
-
 const RoomContent: React.FC = () => {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -17,7 +16,7 @@ const RoomContent: React.FC = () => {
 
   const enterAutomatically = useCallback(async () => {
     if (!me || !me.name.trim() || ready) return;
-    
+
     setLoading(true);
     try {
       await disconnect();
@@ -40,25 +39,25 @@ const RoomContent: React.FC = () => {
 
   const handleJoinRoom = async () => {
     if (!name.trim()) {
-      alert("Nome obrigatório");
+      alert('Nome obrigatório');
       return;
     }
-    
+
     setLoading(true);
     try {
       await disconnect();
       await connect();
-      
+
       // Preservar o ID existente se disponível, senão criar novo
       const userId = me?.id || crypto.randomUUID();
       const userVote = me?.vote || null;
-      
+
       await joinRoom(id, {
         id: userId,
         name: name.trim(),
-        vote: userVote
+        vote: userVote,
       });
-      
+
       setReady(true);
     } catch (error) {
       console.error('Erro ao entrar na sala:', error);
@@ -68,29 +67,22 @@ const RoomContent: React.FC = () => {
     }
   };
 
-
-
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleJoinRoom();
     }
   };
-  
 
   if (!id) {
     return (
-      <div className="gradient-bg room-container">
-        <div className="room-content">
-          <div className="card card-shadow room-error-card">
-            <h2 className="room-error-title">
-              Erro
-            </h2>
-            <p className="room-error-message">
-              ID da sala inválido
-            </p>
-            <button 
-              onClick={() => navigate("/refatorado")} 
-              className="btn btn-primary room-error-btn"
+      <div className='gradient-bg room-container'>
+        <div className='room-content'>
+          <div className='card card-shadow room-error-card'>
+            <h2 className='room-error-title'>Erro</h2>
+            <p className='room-error-message'>ID da sala inválido</p>
+            <button
+              onClick={() => navigate('/refatorado')}
+              className='btn btn-primary room-error-btn'
             >
               Voltar ao Início
             </button>
@@ -105,64 +97,60 @@ const RoomContent: React.FC = () => {
   }
 
   return (
-    <div className="gradient-bg room-container">
-        <div className="room-content">
-          <div className="card card-shadow">
-            <div className="room-join-header">
-              <h2 className="room-join-title">
-                👥 Entrar na Sala
-              </h2>
-              <p className="room-join-subtitle">
-                Sala: <span className="room-id">{id}</span>
-              </p>
-            </div>
-            
-            <div className="room-join-form">
-              <div className="room-input-group">
-                <label htmlFor="name" className="room-label">
-                  Seu nome
-                </label>
-                <input
-                  id="name"
-                  type="text"
-                  placeholder="Digite seu nome"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  disabled={loading}
-                  className="input room-input"
-                />
-              </div>
-              
-              <button 
-                onClick={handleJoinRoom} 
-                disabled={!name.trim() || loading}
-                className="btn btn-primary btn-lg room-join-btn"
-              >
-                {loading ? (
-                  <>
-                    <span className="room-loading-icon animate-spin">⏳</span>
-                    Entrando...
-                  </>
-                ) : (
-                  <>
-                    👥 Entrar na Sala
-                  </>
-                )}
-              </button>
+    <div className='gradient-bg room-container'>
+      <div className='room-content'>
+        <div className='card card-shadow'>
+          <div className='room-join-header'>
+            <h2 className='room-join-title'>👥 Entrar na Sala</h2>
+            <p className='room-join-subtitle'>
+              Sala: <span className='room-id'>{id}</span>
+            </p>
+          </div>
 
-              <div className="room-back-link">
-                <button 
-                  onClick={() => navigate("/refatorado")}
-                  className="room-back-btn"
-                >
-                  ← Voltar ao início
-                </button>
-              </div>
+          <div className='room-join-form'>
+            <div className='room-input-group'>
+              <label htmlFor='name' className='room-label'>
+                Seu nome
+              </label>
+              <input
+                id='name'
+                type='text'
+                placeholder='Digite seu nome'
+                value={name}
+                onChange={e => setName(e.target.value)}
+                onKeyPress={handleKeyPress}
+                disabled={loading}
+                className='input room-input'
+              />
+            </div>
+
+            <button
+              onClick={handleJoinRoom}
+              disabled={!name.trim() || loading}
+              className='btn btn-primary btn-lg room-join-btn'
+            >
+              {loading ? (
+                <>
+                  <span className='room-loading-icon animate-spin'>⏳</span>
+                  Entrando...
+                </>
+              ) : (
+                <>👥 Entrar na Sala</>
+              )}
+            </button>
+
+            <div className='room-back-link'>
+              <button
+                onClick={() => navigate('/refatorado')}
+                className='room-back-btn'
+              >
+                ← Voltar ao início
+              </button>
             </div>
           </div>
         </div>
       </div>
+    </div>
   );
 };
 

@@ -1,4 +1,5 @@
 # Planning Poker 🃏
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/91eee342-7358-40a3-a1e9-6b424e9cd4e1/deploy-status)](https://app.netlify.com/projects/planning-poker-crm/deploys)
 
 Uma aplicação moderna de Planning Poker para refinamento de histórias em equipes ágeis, construída com React, TypeScript, Vite e Liveblocks.
@@ -18,19 +19,21 @@ Uma aplicação moderna de Planning Poker para refinamento de histórias em equi
 
 ### Pré-requisitos
 
-- Node.js 18+ 
+- Node.js 18+
 - Yarn ou npm
 - Conta no [Liveblocks](https://liveblocks.io/)
 
 ### Configuração
 
 1. **Clone o repositório**
+
 ```bash
 git clone <url-do-repositorio>
 cd planning-poker
 ```
 
 2. **Instale as dependências**
+
 ```bash
 yarn install
 # ou
@@ -38,6 +41,7 @@ npm install
 ```
 
 3. **Configure as variáveis de ambiente**
+
 ```bash
 # Copie o arquivo de exemplo
 cp .env.example .env
@@ -52,6 +56,7 @@ VITE_LIVEBLOCKS_PUBLIC_KEY=sua_chave_publica_aqui
    - Copie a **Public Key** para o arquivo `.env`
 
 5. **Execute o projeto**
+
 ```bash
 yarn dev
 # ou
@@ -64,11 +69,13 @@ npm run dev
 ## 🎮 Como usar
 
 ### Criando uma sala
+
 1. Digite seu nome na página inicial
 2. Clique em "🚀 Criar Sala"
 3. Compartilhe o link da sala com sua equipe
 
 ### Votando
+
 1. Escolha um valor de 1-16 ou clique em ✏️ para valor customizado
 2. Aguarde outros participantes votarem
 3. Clique em "👁️ Revelar Votos" quando pronto
@@ -100,6 +107,7 @@ src/
 ## 🎨 Design System
 
 ### Cores principais
+
 - **Background**: Gradiente escuro (`#0f172a` → `#334155`)
 - **Cards**: `#1e293b` com bordas `#475569`
 - **Primário**: Gradiente azul (`#3b82f6` → `#1d4ed8`)
@@ -107,6 +115,7 @@ src/
 - **Aviso**: Gradiente laranja (`#f59e0b` → `#d97706`)
 
 ### Animações
+
 - **Hover effects**: Transform e box-shadow
 - **Loading states**: Pulse e shimmer
 - **Transições**: 0.3s ease para suavidade
