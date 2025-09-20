@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Home } from './pages/Home';
-import { Room } from './pages/Room';
-import { WebsocketEmpresaRefatorado } from './pages/WebsocketEmpresaRefatorado/Home';
+import { Home } from './pages/Home/Home';
+import { Room } from './pages/Room/Room';
+import { WebsocketEmpresaRefatorado } from './pages/WebsocketEmpresaRefatorado/Home/Home';
 import { RefatoradoRoom } from './pages/WebsocketEmpresaRefatorado/Room/Room';
 
 export const RoutesApp: React.FC = () => {
