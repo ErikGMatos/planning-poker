@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+
 import '../../VotingRoom/VotingRoom.css';
-import { useWebsocket } from '../useWebsocket';
 import { RoomStatus } from '../types';
+import { useWebsocket } from '../useWebsocket';
 
 const MAX_PARTICIPANTS = 10;
 

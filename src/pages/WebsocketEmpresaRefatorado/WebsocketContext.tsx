@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useCallback, useEffect, type ReactNode } from 'react';
-import SimpleWebsocketService from './WebsocketService';
-import { type Room, type User, SocketMethods } from './types';
 import { HubConnectionState } from '@microsoft/signalr';
+import React, { useState, useCallback, useEffect, type ReactNode } from 'react';
+
+import { type Room, type User, SocketMethods } from './types';
 import { WebsocketContext } from './WebsocketContextInstance';
+import SimpleWebsocketService from './WebsocketService';
 
 // localStorage keys
 const LS_ROOM = 'ws_room';

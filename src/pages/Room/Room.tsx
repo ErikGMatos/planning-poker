@@ -2,8 +2,10 @@
 import { LiveObject } from '@liveblocks/client';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import { RoomProvider } from '../../liveblocks.config';
 import { VotingRoom } from '../VotingRoom/VotingRoom';
+
 import './Room.css';
 
 export const Room: React.FC = () => {

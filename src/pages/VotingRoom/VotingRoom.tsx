@@ -1,4 +1,6 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import {
   useMyPresence,
   useOthers,
@@ -6,7 +8,7 @@ import {
   useMutation,
   useStatus,
 } from '../../liveblocks.config';
-import { useNavigate } from 'react-router-dom';
+
 import './VotingRoom.css';
 
 const MAX_PARTICIPANTS = 10;

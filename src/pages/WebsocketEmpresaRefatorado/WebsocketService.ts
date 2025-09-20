@@ -5,6 +5,7 @@ import {
   type HubConnection,
   HubConnectionState,
 } from '@microsoft/signalr';
+
 import { SocketMethods, type Room } from './types';
 
 class SimpleWebsocketService {
