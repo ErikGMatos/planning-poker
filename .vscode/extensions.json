@@ -2,8 +2,6 @@
   "recommendations": [
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
-    "editorconfig.editorconfig",
-    "bradlc.vscode-tailwindcss",
-    "ms-vscode.vscode-typescript-next"
+    "editorconfig.editorconfig"
   ]
 }
