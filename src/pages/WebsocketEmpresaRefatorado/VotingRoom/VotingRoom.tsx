@@ -18,10 +18,10 @@ export const VotingRoom: React.FC = () => {
 
   if (!room || !me) {
     return (
-      <div className='gradient-bg voting-room-container'>
-        <div className='voting-room-content'>
+      <div className="gradient-bg voting-room-container">
+        <div className="voting-room-content">
           <div
-            className='card card-shadow'
+            className="card card-shadow"
             style={{ maxWidth: '28rem', margin: '0 auto', textAlign: 'center' }}
           >
             <h2
@@ -124,37 +124,37 @@ export const VotingRoom: React.FC = () => {
   const reveal = room.status === 2;
 
   return (
-    <div className='gradient-bg voting-room-container'>
-      <div className='voting-room-content'>
+    <div className="gradient-bg voting-room-container">
+      <div className="voting-room-content">
         {/* Header */}
-        <div className='voting-room-header'>
+        <div className="voting-room-header">
           <div>
-            <h1 className='voting-room-title'>Planning Poker</h1>
-            <p className='voting-room-subtitle'>
-              Olá, <span className='user-name'>{me.name}</span>! Escolha sua
+            <h1 className="voting-room-title">Planning Poker</h1>
+            <p className="voting-room-subtitle">
+              Olá, <span className="user-name">{me.name}</span>! Escolha sua
               estimativa.
             </p>
           </div>
-          <div className='voting-room-actions'>
-            <button onClick={copyRoomLink} className='btn btn-secondary'>
+          <div className="voting-room-actions">
+            <button onClick={copyRoomLink} className="btn btn-secondary">
               {copied ? '✓ Copiado!' : '📋 Compartilhar'}
             </button>
           </div>
         </div>
 
-        <div className='voting-room-grid'>
+        <div className="voting-room-grid">
           {/* Voting Cards */}
-          <div className='voting-section'>
+          <div className="voting-section">
             {/* Vote Options */}
-            <div className='card vote-options-card'>
-              <div className='vote-options-header'>
-                <h2 className='vote-options-title'>Escolha sua estimativa</h2>
-                <p className='vote-options-description'>
+            <div className="card vote-options-card">
+              <div className="vote-options-header">
+                <h2 className="vote-options-title">Escolha sua estimativa</h2>
+                <p className="vote-options-description">
                   Selecione o número de pontos que você acredita que esta
                   história vale
                 </p>
               </div>
-              <div className='vote-options-grid'>
+              <div className="vote-options-grid">
                 {options.map(opt => (
                   <button
                     key={opt}
@@ -189,13 +189,13 @@ export const VotingRoom: React.FC = () => {
                   </label>
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
                     <input
-                      type='number'
-                      min='1'
-                      placeholder='Ex: 20'
+                      type="number"
+                      min="1"
+                      placeholder="Ex: 20"
                       value={customValue}
                       onChange={e => setCustomValue(e.target.value)}
                       onKeyPress={handleCustomKeyPress}
-                      className='input'
+                      className="input"
                       style={{ flex: 1 }}
                       autoFocus
                     />
@@ -206,7 +206,7 @@ export const VotingRoom: React.FC = () => {
                         isNaN(parseInt(customValue)) ||
                         parseInt(customValue) <= 0
                       }
-                      className='btn btn-primary'
+                      className="btn btn-primary"
                     >
                       ✓
                     </button>
@@ -215,7 +215,7 @@ export const VotingRoom: React.FC = () => {
                         setShowCustomInput(false);
                         setCustomValue('');
                       }}
-                      className='btn btn-secondary'
+                      className="btn btn-secondary"
                     >
                       ✕
                     </button>
@@ -234,12 +234,12 @@ export const VotingRoom: React.FC = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className='card action-buttons-card'>
-              <div className='action-buttons-container'>
+            <div className="card action-buttons-card">
+              <div className="action-buttons-container">
                 <button
                   onClick={() => doReveal({ roomId: room.id })}
                   disabled={reveal}
-                  className='btn btn-primary btn-lg reveal-btn'
+                  className="btn btn-primary btn-lg reveal-btn"
                 >
                   👁️ Revelar Votos{' '}
                   {votedCount < allUsers.length &&
@@ -248,7 +248,7 @@ export const VotingRoom: React.FC = () => {
 
                 <button
                   onClick={handleReset}
-                  className='btn btn-secondary reset-btn'
+                  className="btn btn-secondary reset-btn"
                 >
                   🔄 Nova Votação
                 </button>
@@ -257,25 +257,25 @@ export const VotingRoom: React.FC = () => {
 
             {/* Results */}
             {reveal && revealedVotes.length > 0 && (
-              <div className='card results-card'>
-                <h3 className='results-title'>Resultados da Votação</h3>
-                <div className='results-grid'>
+              <div className="card results-card">
+                <h3 className="results-title">Resultados da Votação</h3>
+                <div className="results-grid">
                   {average && (
-                    <div className='result-item average'>
-                      <div className='result-value average'>{average}</div>
-                      <div className='result-label average'>Média</div>
+                    <div className="result-item average">
+                      <div className="result-value average">{average}</div>
+                      <div className="result-label average">Média</div>
                     </div>
                   )}
                   {minVote !== null && (
-                    <div className='result-item min'>
-                      <div className='result-value min'>📉 {minVote}</div>
-                      <div className='result-label min'>Menor</div>
+                    <div className="result-item min">
+                      <div className="result-value min">📉 {minVote}</div>
+                      <div className="result-label min">Menor</div>
                     </div>
                   )}
                   {maxVote !== null && (
-                    <div className='result-item max'>
-                      <div className='result-value max'>📈 {maxVote}</div>
-                      <div className='result-label max'>Maior</div>
+                    <div className="result-item max">
+                      <div className="result-value max">📈 {maxVote}</div>
+                      <div className="result-label max">Maior</div>
                     </div>
                   )}
                 </div>
@@ -284,13 +284,13 @@ export const VotingRoom: React.FC = () => {
           </div>
 
           {/* Participants */}
-          <div className='participants-section'>
-            <div className='card participants-card'>
-              <div className='participants-header'>
-                <h3 className='participants-title'>
+          <div className="participants-section">
+            <div className="card participants-card">
+              <div className="participants-header">
+                <h3 className="participants-title">
                   👥 Participantes ({allUsers.length}/{MAX_PARTICIPANTS})
                 </h3>
-                <p className='participants-count'>
+                <p className="participants-count">
                   {votedCount} de {allUsers.length} votaram
                 </p>
                 {allUsers.length >= MAX_PARTICIPANTS - 2 && (
@@ -310,24 +310,24 @@ export const VotingRoom: React.FC = () => {
                   </p>
                 )}
               </div>
-              <div className='participants-list'>
+              <div className="participants-list">
                 {allUsers.map(user => (
-                  <div key={user.id} className='participant-item'>
-                    <div className='participant-info'>
-                      <div className='avatar'>
+                  <div key={user.id} className="participant-item">
+                    <div className="participant-info">
+                      <div className="avatar">
                         <span>{getInitials(user.name)}</span>
                       </div>
-                      <span className='participant-name'>
+                      <span className="participant-name">
                         {user.name}
                         {user.id === me.id && ' (você)'}
                       </span>
                     </div>
-                    <div className='participant-status'>
+                    <div className="participant-status">
                       {reveal ? (
                         user.vote !== null ? (
-                          <span className='badge badge-blue'>{user.vote}</span>
+                          <span className="badge badge-blue">{user.vote}</span>
                         ) : (
-                          <span className='badge badge-gray'>-</span>
+                          <span className="badge badge-gray">-</span>
                         )
                       ) : (
                         <span

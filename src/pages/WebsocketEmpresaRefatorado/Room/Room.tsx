@@ -75,14 +75,14 @@ const RoomContent: React.FC = () => {
 
   if (!id) {
     return (
-      <div className='gradient-bg room-container'>
-        <div className='room-content'>
-          <div className='card card-shadow room-error-card'>
-            <h2 className='room-error-title'>Erro</h2>
-            <p className='room-error-message'>ID da sala inválido</p>
+      <div className="gradient-bg room-container">
+        <div className="room-content">
+          <div className="card card-shadow room-error-card">
+            <h2 className="room-error-title">Erro</h2>
+            <p className="room-error-message">ID da sala inválido</p>
             <button
               onClick={() => navigate('/refatorado')}
-              className='btn btn-primary room-error-btn'
+              className="btn btn-primary room-error-btn"
             >
               Voltar ao Início
             </button>
@@ -97,41 +97,41 @@ const RoomContent: React.FC = () => {
   }
 
   return (
-    <div className='gradient-bg room-container'>
-      <div className='room-content'>
-        <div className='card card-shadow'>
-          <div className='room-join-header'>
-            <h2 className='room-join-title'>👥 Entrar na Sala</h2>
-            <p className='room-join-subtitle'>
-              Sala: <span className='room-id'>{id}</span>
+    <div className="gradient-bg room-container">
+      <div className="room-content">
+        <div className="card card-shadow">
+          <div className="room-join-header">
+            <h2 className="room-join-title">👥 Entrar na Sala</h2>
+            <p className="room-join-subtitle">
+              Sala: <span className="room-id">{id}</span>
             </p>
           </div>
 
-          <div className='room-join-form'>
-            <div className='room-input-group'>
-              <label htmlFor='name' className='room-label'>
+          <div className="room-join-form">
+            <div className="room-input-group">
+              <label htmlFor="name" className="room-label">
                 Seu nome
               </label>
               <input
-                id='name'
-                type='text'
-                placeholder='Digite seu nome'
+                id="name"
+                type="text"
+                placeholder="Digite seu nome"
                 value={name}
                 onChange={e => setName(e.target.value)}
                 onKeyPress={handleKeyPress}
                 disabled={loading}
-                className='input room-input'
+                className="input room-input"
               />
             </div>
 
             <button
               onClick={handleJoinRoom}
               disabled={!name.trim() || loading}
-              className='btn btn-primary btn-lg room-join-btn'
+              className="btn btn-primary btn-lg room-join-btn"
             >
               {loading ? (
                 <>
-                  <span className='room-loading-icon animate-spin'>⏳</span>
+                  <span className="room-loading-icon animate-spin">⏳</span>
                   Entrando...
                 </>
               ) : (
@@ -139,10 +139,10 @@ const RoomContent: React.FC = () => {
               )}
             </button>
 
-            <div className='room-back-link'>
+            <div className="room-back-link">
               <button
                 onClick={() => navigate('/refatorado')}
-                className='room-back-btn'
+                className="room-back-btn"
               >
                 ← Voltar ao início
               </button>

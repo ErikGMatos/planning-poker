@@ -44,35 +44,35 @@ export const Home: React.FC = () => {
   };
 
   return (
-    <div className='gradient-bg home-container'>
-      <div className='home-content'>
+    <div className="gradient-bg home-container">
+      <div className="home-content">
         {/* Header */}
-        <div className='home-header'>
-          <h1 className='home-title'>Planning Poker</h1>
+        <div className="home-header">
+          <h1 className="home-title">Planning Poker</h1>
         </div>
 
         {/* Main Card */}
-        <div className='card card-shadow home-main-card'>
-          <div className='home-card-header'>
-            <h2 className='home-card-title'>Começar Sessão</h2>
-            <p className='home-card-description'>
+        <div className="card card-shadow home-main-card">
+          <div className="home-card-header">
+            <h2 className="home-card-title">Começar Sessão</h2>
+            <p className="home-card-description">
               Digite seu nome para criar uma nova sala de votação
             </p>
           </div>
 
-          <div className='home-form'>
-            <div className='home-input-group'>
-              <label htmlFor='name' className='home-label'>
+          <div className="home-form">
+            <div className="home-input-group">
+              <label htmlFor="name" className="home-label">
                 Seu nome
               </label>
               <input
-                id='name'
-                type='text'
-                placeholder='Digite seu nome'
+                id="name"
+                type="text"
+                placeholder="Digite seu nome"
                 value={name}
                 onChange={e => setName(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className='input home-input'
+                className="input home-input"
               />
             </div>
 
@@ -80,20 +80,20 @@ export const Home: React.FC = () => {
             <button
               onClick={createRoom}
               disabled={!name.trim()}
-              className='btn btn-primary btn-lg home-create-btn'
+              className="btn btn-primary btn-lg home-create-btn"
             >
               Criar Nova Sala
             </button>
 
-            {/* <button 
-                onClick={createWebsocketRoom} 
+            {/* <button
+                onClick={createWebsocketRoom}
                 disabled={!name.trim()}
                 className="btn btn-secondary btn-lg home-create-btn"
               >
                 Criar Nova Sala (Websocket Empresa)
               </button>
 
-              <button 
+              <button
                 onClick={goToRefatorado}
                 className="btn btn-success btn-lg home-create-btn"
               >
@@ -101,7 +101,7 @@ export const Home: React.FC = () => {
               </button> */}
             {/* </div> */}
 
-            <div className='home-help-text'>
+            <div className="home-help-text">
               <p>
                 Ou entre em uma sala existente através do link compartilhado
               </p>
