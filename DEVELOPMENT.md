@@ -35,7 +35,29 @@ yarn format
 
 # Verificar formatação sem alterar arquivos
 yarn format:check
+
+# Executar lint-staged manualmente
+npx lint-staged
 ```
+
+## Git Hooks (Husky)
+
+O projeto está configurado com **Husky** para executar verificações automáticas antes de cada commit:
+
+### Pre-commit Hook
+
+- **ESLint**: Verifica e corrige problemas de linting automaticamente
+- **Prettier**: Formata o código automaticamente
+- **Aborta o commit**: Se houver erros que não podem ser corrigidos automaticamente
+
+### Como Funciona
+
+1. Ao fazer `git commit`, o Husky executa automaticamente
+2. O lint-staged processa apenas os arquivos que foram modificados
+3. ESLint corrige problemas automaticamente quando possível
+4. Prettier formata o código
+5. Se houver erros que não podem ser corrigidos, o commit é abortado
+6. Se tudo estiver correto, o commit é realizado
 
 ## Configuração do VS Code
 
