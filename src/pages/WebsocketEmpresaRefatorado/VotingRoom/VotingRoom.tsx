@@ -28,7 +28,8 @@ export const VotingRoom: React.FC = () => {
     );
   }
 
-  const allUsers = [...room.users, me];
+  // O backend já inclui o usuário atual no room.users
+  const allUsers = room.users;
 
   const votedCount = allUsers.filter(u => u.vote !== null).length;
 
