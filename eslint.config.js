@@ -27,6 +27,13 @@ export default tseslint.config([
         { allowConstantExport: true },
       ],
       'prettier/prettier': 'error',
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          prefer: 'type-imports',
+          fixStyle: 'inline-type-imports',
+        },
+      ],
     },
     languageOptions: {
       ecmaVersion: 2020,

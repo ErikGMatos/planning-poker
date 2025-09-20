@@ -11,7 +11,10 @@ const HomeContent: React.FC = () => {
 
   const handleCreate = async () => {
     await connect();
-    const newRoom = await createRoom(name, '');
+    // verificar aqui pq nao é o nome do usuario e sim da sala, talvez nao precise, ou passar o mesmo nome
+    // pois nao tem na interface a opão de escolher nome de sala
+    // e não faz sentido ter, oe ja tem o id da sala que é o q precisa para entrar na sala
+    const newRoom = await createRoom(name);
     const userId = crypto.randomUUID().toString();
     await joinRoom(newRoom.id, { id: userId, name, vote: null });
     if (newRoom.id) {

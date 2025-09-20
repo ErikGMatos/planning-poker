@@ -112,15 +112,16 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
     setMe(null);
   }, []);
 
-  const createRoom = async (name: string, description: string) => {
-    const result = (await SimpleWebsocketService.createRoom({
+  const createRoom = useCallback(async (name: string) => {
+    // verificar aqui para colocar um nome padrão para a criação da sala
+    const result = await SimpleWebsocketService.createRoom({
       name,
-      description,
+      description: '',
       votingOptions: ['1', '2', '3', '5', '8', '13', '21', '?'],
-    })) as Room;
+    });
     setRoom(result);
     return result;
-  };
+  }, []);
 
   const joinRoom = useCallback(async (roomId: string, user: User) => {
     await SimpleWebsocketService.joinRoom({ roomId, user });

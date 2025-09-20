@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../../VotingRoom/VotingRoom.css';
 import { useWebsocket } from '../useWebsocket';
+import { RoomStatus } from '../types';
 
 const MAX_PARTICIPANTS = 10;
 
@@ -44,6 +45,7 @@ export const VotingRoom: React.FC = () => {
   }
 
   // O backend já inclui o usuário atual no room.users
+  // filtrar os usuarios que nao sao o usuario atual
   const allUsers = room.users;
 
   const votedCount = allUsers.filter(u => u.vote !== null).length;
@@ -121,7 +123,7 @@ export const VotingRoom: React.FC = () => {
     }
   };
 
-  const reveal = room.status === 2;
+  const reveal = room.status === RoomStatus.Voted;
 
   return (
     <div className="gradient-bg voting-room-container">

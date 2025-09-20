@@ -1,5 +1,5 @@
 // liveblocks.config.ts
-import { createClient, LiveObject } from '@liveblocks/client';
+import { createClient, type LiveObject } from '@liveblocks/client';
 import { createRoomContext } from '@liveblocks/react';
 
 // Tipos que você está usando

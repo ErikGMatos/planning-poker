@@ -2,10 +2,10 @@
 import {
   HubConnectionBuilder,
   HttpTransportType,
-  HubConnection,
+  type HubConnection,
   HubConnectionState,
 } from '@microsoft/signalr';
-import { SocketMethods } from './types';
+import { SocketMethods, type Room } from './types';
 
 class SimpleWebsocketService {
   private connection: HubConnection | null = null;
@@ -52,7 +52,7 @@ class SimpleWebsocketService {
     if (!this.connection) throw new Error('Não conectado ao WebSocket');
   }
 
-  async createRoom(command: unknown) {
+  async createRoom(command: unknown): Promise<Room> {
     this.ensureConnection();
     return this.connection!.invoke(SocketMethods.CreateRoom, command);
   }
