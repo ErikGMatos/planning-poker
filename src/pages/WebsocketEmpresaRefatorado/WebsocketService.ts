@@ -95,6 +95,10 @@ class SimpleWebsocketService {
   }
 
   off(event: string, callback?: (...args: any[]) => void) {
+    if (!callback) {
+      this.connection?.off(event);
+      return;
+    }
     this.connection?.off(event, callback);
   }
 }
