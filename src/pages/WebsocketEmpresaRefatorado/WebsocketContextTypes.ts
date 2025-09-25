@@ -9,7 +9,7 @@ export interface WebsocketContextType {
   connect: () => Promise<void>;
   disconnect: () => Promise<void>;
   createRoom: (name: string) => Promise<Room>;
-  joinRoom: (roomId: string, user: User) => Promise<void>;
+  joinRoom: (roomId: string) => Promise<void>;
   leaveRoom: () => Promise<void>;
   vote: ({
     userId,
@@ -23,4 +23,6 @@ export interface WebsocketContextType {
   reveal: ({ roomId }: { roomId: string }) => Promise<void>;
   reset: ({ roomId }: { roomId: string }) => Promise<void>;
   getState: () => Promise<HubConnectionState>;
+  setMe: (me: User | null) => void;
+  setRoom: (room: Room | null) => void;
 }

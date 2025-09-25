@@ -1,23 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useWebsocket } from '../useWebsocket';
 import { WebsocketProvider } from '../WebsocketContext';
+import type { User } from '../types';
+
 import '../../Home/Home.css';
 
 const HomeContent: React.FC = () => {
   const navigate = useNavigate();
-  const { createRoom, joinRoom, connect, me } = useWebsocket();
+  const { createRoom, joinRoom, connect, setRoom, setMe, me } = useWebsocket();
   const [name, setName] = useState(me?.name || '');
+
+  useEffect(() => {
+    setRoom(null);
+  }, []);
 
   const handleCreate = async () => {
     await connect();
-    // verificar aqui pq nao é o nome do usuario e sim da sala, talvez nao precise, ou passar o mesmo nome
-    // pois nao tem na interface a opão de escolher nome de sala
-    // e não faz sentido ter, oe ja tem o id da sala que é o q precisa para entrar na sala
+
+    let _me: User | null = me ? { ...me } : null;
+
+    if (_me) {
+      _me.vote = null;
+    } else {
+      _me = {
+        id: crypto.randomUUID().toString(),
+        name,
+        vote: null
+      };
+    }
+    setMe(_me);
+
     const newRoom = await createRoom(name);
-    const userId = crypto.randomUUID().toString();
-    await joinRoom(newRoom.id, { id: userId, name, vote: null });
+    //await joinRoom(newRoom.id);
     if (newRoom.id) {
       navigate(`/refatorado-room/${newRoom.id}`);
     }

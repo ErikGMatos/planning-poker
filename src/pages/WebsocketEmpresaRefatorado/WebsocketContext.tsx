@@ -16,9 +16,6 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
   const [room, setRoom] = useState<Room | null>(() =>
     JSON.parse(localStorage.getItem(LS_ROOM) || 'null')
   );
-  const [me, setMe] = useState<User | null>(() =>
-    JSON.parse(localStorage.getItem(LS_ME) || 'null')
-  );
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
@@ -29,13 +26,14 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, [room]);
 
-  useEffect(() => {
-    if (me) {
-      localStorage.setItem(LS_ME, JSON.stringify(me));
-    } else {
-      localStorage.removeItem(LS_ME);
-    }
-  }, [me]);
+  const getMe = (): User | null => {
+    const _user = JSON.parse(localStorage.getItem(LS_ME) || 'null')
+    return _user;
+  }
+
+  const setUser = (user: User | null) => {
+    localStorage.setItem(LS_ME, JSON.stringify(user));
+  }
 
   const setupListeners = useCallback(() => {
     const conn = (SimpleWebsocketService as any).connection;
@@ -46,20 +44,20 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
     conn.on(SocketMethods.Revealed, setRoom);
     conn.on(SocketMethods.Reseted, (updated: Room) => {
       setRoom(updated);
-      setMe(prev => (prev ? { ...prev, vote: null } : null));
     });
 
     conn.onreconnected(async () => {
       setIsConnected(true);
       // Usar dados do localStorage em vez do estado atual
       const savedRoom = JSON.parse(localStorage.getItem(LS_ROOM) || 'null');
-      const savedMe = JSON.parse(localStorage.getItem(LS_ME) || 'null');
+      const savedMe = getMe();
 
       if (savedRoom && savedMe) {
         try {
           await SimpleWebsocketService.joinRoom({
             roomId: savedRoom.id,
-            user: savedMe,
+            userId: savedMe.id,
+            name: savedMe.name
           });
           if (savedMe.vote != null) {
             await SimpleWebsocketService.vote({
@@ -82,24 +80,6 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
       const connection = await SimpleWebsocketService.connect();
       setIsConnected(connection.state === HubConnectionState.Connected);
       setupListeners();
-
-      // Usar dados do localStorage para reconexão
-      const savedRoom = JSON.parse(localStorage.getItem(LS_ROOM) || 'null');
-      const savedMe = JSON.parse(localStorage.getItem(LS_ME) || 'null');
-
-      if (savedRoom && savedMe) {
-        await SimpleWebsocketService.joinRoom({
-          roomId: savedRoom.id,
-          user: savedMe,
-        });
-        if (savedMe.vote != null) {
-          await SimpleWebsocketService.vote({
-            roomId: savedRoom.id,
-            userId: savedMe.id,
-            value: savedMe.vote,
-          });
-        }
-      }
     } catch (error) {
       console.error('Erro ao conectar:', error);
       setIsConnected(false);
@@ -110,7 +90,6 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
     await SimpleWebsocketService.disconnect();
     setIsConnected(false);
     setRoom(null);
-    setMe(null);
   }, []);
 
   const createRoom = useCallback(async (name: string) => {
@@ -124,20 +103,23 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
     return result;
   }, []);
 
-  const joinRoom = useCallback(async (roomId: string, user: User) => {
-    await SimpleWebsocketService.joinRoom({ roomId, user });
-    // Sempre atualizar o me com o usuário fornecido
-    setMe(user);
+  const joinRoom = useCallback(async (roomId: string) => {
+    const me = getMe();
+    await SimpleWebsocketService.joinRoom({
+      roomId: roomId,
+      userId: me?.id,
+      name: me?.name
+    });
   }, []);
 
   const leaveRoom = useCallback(async () => {
+    const me = getMe();
     if (room && me)
       await SimpleWebsocketService.leaveRoom({
         roomId: room.id,
         userId: me.id,
       });
-    setMe(null);
-  }, [room, me]);
+  }, [room]);
 
   const vote = useCallback(
     async ({
@@ -149,12 +131,12 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
       roomId: string;
       vote: number;
     }) => {
+      const me = getMe();
       if (room && me) {
         await SimpleWebsocketService.vote({ roomId, userId, vote });
-        setMe(prev => (prev ? { ...prev, vote } : null));
       }
     },
-    [room, me]
+    [room]
   );
 
   const reveal = useCallback(
@@ -174,7 +156,7 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
     <WebsocketContext.Provider
       value={{
         room,
-        me,
+        me: getMe(),
         isConnected,
         connect,
         disconnect,
@@ -185,6 +167,8 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
         reveal,
         reset,
         getState,
+        setMe: setUser,
+        setRoom: setRoom
       }}
     >
       {children}

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { Home } from './pages/Home/Home';
-import { Room } from './pages/Room/Room';
-import { WebsocketEmpresaRefatorado } from './pages/WebsocketEmpresaRefatorado/Home/Home';
-import { RefatoradoRoom } from './pages/WebsocketEmpresaRefatorado/Room/Room';
+const Home = lazy(() => import('./pages/Home/Home').then(module => ({ default: module.Home })));
+const Room = lazy(() => import('./pages/Room/Room').then(module => ({ default: module.Room })));
+const WebsocketEmpresaRefatorado = lazy(() => import('./pages/WebsocketEmpresaRefatorado/Home/Home').then(module => ({ default: module.WebsocketEmpresaRefatorado })));
+const RefatoradoRoom = lazy(() => import('./pages/WebsocketEmpresaRefatorado/Room/Room').then(module => ({ default: module.RefatoradoRoom })));
 
 export const RoutesApp: React.FC = () => {
   return (

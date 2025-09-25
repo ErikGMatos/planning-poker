@@ -1,41 +1,39 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useWebsocket } from '../useWebsocket';
 import { VotingRoom } from '../VotingRoom/VotingRoom';
 import { WebsocketProvider } from '../WebsocketContext';
 import '../../Room/Room.css';
+import type { User } from '../types';
 
 const RoomContent: React.FC = () => {
-  const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { joinRoom, connect, disconnect, me } = useWebsocket();
+  const { joinRoom, connect, disconnect, setMe, me } = useWebsocket();
+
+  const { id = '' } = useParams<{ id: string }>();
+
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
 
-  const enterAutomatically = useCallback(async () => {
-    if (!me || !me.name.trim() || ready) return;
-
-    setLoading(true);
-    try {
-      await disconnect();
-      await connect();
-      await joinRoom(id, me);
-      setReady(true);
-    } catch (error) {
-      console.error('Erro ao entrar automaticamente:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, [connect, disconnect, id, joinRoom, me, ready]);
-
-  React.useEffect(() => {
-    if (me && me.name.trim() && !ready) {
-      setName(me.name);
+  useEffect(() => {
+    const enterAutomatically = async () => {
+      setLoading(true);
+      try {
+        await connect();
+        await joinRoom(id);
+        setReady(true);
+      } catch (error) {
+        console.error('Erro ao entrar automaticamente:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (me && id) {
       enterAutomatically();
     }
-  }, [me, ready, enterAutomatically]);
+  }, []);
 
   const handleJoinRoom = async () => {
     if (!name.trim()) {
@@ -45,18 +43,23 @@ const RoomContent: React.FC = () => {
 
     setLoading(true);
     try {
-      await disconnect();
       await connect();
 
       // Preservar o ID existente se disponível, senão criar novo
-      const userId = me?.id || crypto.randomUUID();
-      const userVote = me?.vote || null;
+      let _me: User | null = me ? { ...me } : null;
 
-      await joinRoom(id, {
-        id: userId,
-        name: name.trim(),
-        vote: userVote,
-      });
+      if (_me) {
+        _me.vote = null;
+      } else {
+        _me = {
+          id: crypto.randomUUID().toString(),
+          name,
+          vote: null
+        };
+      }
+      setMe(_me);
+      debugger
+      await joinRoom(id);
 
       setReady(true);
     } catch (error) {
