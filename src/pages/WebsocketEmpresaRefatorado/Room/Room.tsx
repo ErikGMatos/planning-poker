@@ -2,31 +2,40 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import '../../Room/Room.css';
+import { ErrorAlert } from '../components/ErrorAlert';
+import { useConnectionError } from '../hooks/useConnectionError';
+import { useWebsocket } from '../hooks/useWebsocket';
 import type { User } from '../types';
-import { useWebsocket } from '../useWebsocket';
 import { VotingRoom } from '../VotingRoom/VotingRoom';
 
 export const RefatoradoRoom = () => {
   const navigate = useNavigate();
   const { joinRoom, connect, setMe, me } = useWebsocket();
+  const { connectionError, clearError, executeWithErrorHandling } =
+    useConnectionError();
 
   const { id = '' } = useParams<{ id: string }>();
 
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
+  const [joinError, setJoinError] = useState<string | null>(null);
 
   useEffect(() => {
     const enterAutomatically = async () => {
       if (!id) return;
 
       setLoading(true);
+      setJoinError(null);
       try {
-        await connect();
-        await joinRoom(id);
-        setReady(true);
+        await executeWithErrorHandling(async () => {
+          await connect();
+          await joinRoom(id);
+          setReady(true);
+        }, 'Falha ao conectar à sala. Verifique sua conexão.');
       } catch (error) {
         console.error('Erro ao entrar automaticamente:', error);
+        setJoinError('Erro ao conectar à sala. Tente novamente.');
       } finally {
         setLoading(false);
       }
@@ -36,45 +45,59 @@ export const RefatoradoRoom = () => {
     if (me?.name && id) {
       enterAutomatically();
     }
-  }, [connect, id, joinRoom, me?.name]); // ← Apenas id como dependência
+  }, [connect, id, joinRoom, me?.name, executeWithErrorHandling]);
 
   const handleJoinRoom = async () => {
     if (!name.trim()) {
-      alert('Nome obrigatório');
+      setJoinError('Nome é obrigatório');
       return;
     }
 
     setLoading(true);
+    setJoinError(null);
+    clearError();
+
     try {
-      await connect();
+      await executeWithErrorHandling(async () => {
+        await connect();
 
-      // Preservar o ID existente se disponível, senão criar novo
-      let _me: User | null = me ? { ...me } : null;
+        // Preservar o ID existente se disponível, senão criar novo
+        let _me: User | null = me ? { ...me } : null;
 
-      if (_me) {
-        _me.vote = null;
-      } else {
-        _me = {
-          id: crypto.randomUUID().toString(),
-          name,
-          vote: null,
-        };
-      }
-      setMe(_me);
-      await joinRoom(id);
+        if (_me) {
+          _me.vote = null;
+          _me.name = name; // Atualiza o nome
+        } else {
+          _me = {
+            id: crypto.randomUUID().toString(),
+            name,
+            vote: null,
+          };
+        }
+        setMe(_me);
+        await joinRoom(id);
 
-      setReady(true);
+        setReady(true);
+      }, 'Falha ao entrar na sala. Verifique sua conexão.');
     } catch (error) {
       console.error('Erro ao entrar na sala:', error);
-      alert('Erro ao entrar na sala. Tente novamente.');
+      setJoinError('Erro ao entrar na sala. Tente novamente.');
     } finally {
       setLoading(false);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !loading) {
       handleJoinRoom();
+    }
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+    // Limpa erros quando o usuário começa a digitar
+    if (joinError) {
+      setJoinError(null);
     }
   };
 
@@ -113,6 +136,22 @@ export const RefatoradoRoom = () => {
           </div>
 
           <div className="room-join-form">
+            {/* Exibe erros de conexão */}
+            {connectionError && (
+              <div style={{ marginBottom: '1rem' }}>
+                <ErrorAlert message={connectionError} onClose={clearError} />
+              </div>
+            )}
+
+            {/* Exibe erros de entrada na sala */}
+            {joinError && (
+              <div style={{ marginBottom: '1rem' }}>
+                <ErrorAlert
+                  message={joinError}
+                  onClose={() => setJoinError(null)}
+                />
+              </div>
+            )}
             <div className="room-input-group">
               <label htmlFor="name" className="room-label">
                 Seu nome
@@ -122,10 +161,11 @@ export const RefatoradoRoom = () => {
                 type="text"
                 placeholder="Digite seu nome"
                 value={name}
-                onChange={e => setName(e.target.value)}
+                onChange={handleNameChange}
                 onKeyPress={handleKeyPress}
                 disabled={loading}
-                className="input room-input"
+                className={`input room-input ${joinError ? 'input-error' : ''}`}
+                maxLength={50}
               />
             </div>
 

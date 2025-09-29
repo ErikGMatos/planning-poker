@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
 import '../../VotingRoom/VotingRoom.css';
+import { ErrorAlert } from '../components/ErrorAlert';
+import { useConnectionError } from '../hooks/useConnectionError';
+import { useWebsocket } from '../hooks/useWebsocket';
 import { RoomStatus } from '../types';
-import { useWebsocket } from '../useWebsocket';
 
 const MAX_PARTICIPANTS = 10;
 
@@ -14,6 +16,8 @@ export const VotingRoom: React.FC = () => {
     reveal: doReveal,
     reset: doReset,
   } = useWebsocket();
+  const { connectionError, clearError, executeWithErrorHandling } =
+    useConnectionError();
   const [copied, setCopied] = useState(false);
   const [customValue, setCustomValue] = useState('');
   const [showCustomInput, setShowCustomInput] = useState(false);
@@ -48,7 +52,7 @@ export const VotingRoom: React.FC = () => {
   // O backend já inclui o usuário atual no room.users
   // filtrar os usuarios que nao sao o usuario atual
   const allUsers = room.users;
-
+  const currentUserVote = room.users.find(u => u.id === me.id)?.vote;
   const votedCount = allUsers.filter(u => u.vote !== null).length;
 
   const revealedVotes = allUsers
@@ -84,21 +88,28 @@ export const VotingRoom: React.FC = () => {
     ? [...baseOptions, customVote, 'custom']
     : [...baseOptions, 'custom'];
 
-  const handleVote = (opt: number | string) => {
+  const handleVote = async (opt: number | string) => {
     if (opt === 'custom') {
       setShowCustomInput(true);
       return;
     }
     const voteValue = typeof opt === 'number' ? opt : null;
-    if (voteValue !== null)
-      doVote({ userId: me.id, roomId: room.id, vote: voteValue });
+    if (voteValue !== null) {
+      await executeWithErrorHandling(
+        () => doVote({ userId: me.id, roomId: room.id, vote: voteValue }),
+        'Falha ao votar. Verifique sua conexão.'
+      );
+    }
     setShowCustomInput(false);
   };
 
-  const handleCustomVote = () => {
+  const handleCustomVote = async () => {
     const value = parseInt(customValue);
     if (!isNaN(value) && value > 0) {
-      doVote({ userId: me.id, roomId: room.id, vote: value });
+      await executeWithErrorHandling(
+        () => doVote({ userId: me.id, roomId: room.id, vote: value }),
+        'Falha ao votar. Verifique sua conexão.'
+      );
       setShowCustomInput(false);
       setCustomValue('');
     }
@@ -112,7 +123,12 @@ export const VotingRoom: React.FC = () => {
     }
   };
 
-  const handleReset = () => doReset({ roomId: room.id });
+  const handleReset = async () => {
+    await executeWithErrorHandling(
+      () => doReset({ roomId: room.id }),
+      'Falha ao resetar votação. Verifique sua conexão.'
+    );
+  };
 
   const copyRoomLink = async () => {
     try {
@@ -129,6 +145,13 @@ export const VotingRoom: React.FC = () => {
   return (
     <div className="gradient-bg voting-room-container">
       <div className="voting-room-content">
+        {/* Exibe erro de conexão */}
+        {connectionError && (
+          <div style={{ marginBottom: '1rem' }}>
+            <ErrorAlert message={connectionError} onClose={clearError} />
+          </div>
+        )}
+
         {/* Header */}
         <div className="voting-room-header">
           <div>
@@ -162,7 +185,7 @@ export const VotingRoom: React.FC = () => {
                   <button
                     key={opt}
                     onClick={() => handleVote(opt)}
-                    className={`vote-option-btn ${me.vote === opt ? 'selected' : ''}`}
+                    className={`vote-option-btn ${currentUserVote === +opt ? 'selected' : ''}`}
                   >
                     {opt === 'custom' ? '✏️' : opt}
                   </button>
@@ -240,7 +263,12 @@ export const VotingRoom: React.FC = () => {
             <div className="card action-buttons-card">
               <div className="action-buttons-container">
                 <button
-                  onClick={() => doReveal({ roomId: room.id })}
+                  onClick={async () => {
+                    await executeWithErrorHandling(
+                      () => doReveal({ roomId: room.id }),
+                      'Falha ao revelar votos. Verifique sua conexão.'
+                    );
+                  }}
                   disabled={reveal}
                   className="btn btn-primary btn-lg reveal-btn"
                 >

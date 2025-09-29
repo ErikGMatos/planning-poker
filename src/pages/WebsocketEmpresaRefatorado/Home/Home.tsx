@@ -1,48 +1,61 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-import type { User } from '../types';
-import { useWebsocket } from '../useWebsocket';
+import { ErrorAlert } from '../components/ErrorAlert';
+import { useRoomCreation } from '../hooks/useRoomCreation';
+import { useUserManagement } from '../hooks/useUserManagement';
+import { validateUserName, sanitizeUserName } from '../utils/validation';
 
 import '../../Home/Home.css';
 
 export const HomeContent = () => {
-  const navigate = useNavigate();
-  const { createRoom, connect, setRoom, setMe, me } = useWebsocket();
-  const [name, setName] = useState(me?.name || '');
-  const [loading, setLoading] = useState(false);
+  const { isCreating, error, createNewRoom, clearError, clearCurrentRoom } =
+    useRoomCreation();
+  const { currentUser } = useUserManagement();
+  const [name, setName] = useState(currentUser?.name || '');
+  const [validationError, setValidationError] = useState<string | null>(null);
+
+  // Limpa a sala atual quando o componente monta
   useEffect(() => {
-    setRoom(null);
-  }, [setRoom]);
+    clearCurrentRoom();
+  }, [clearCurrentRoom]);
+
+  // Atualiza o nome quando o usuário atual mudar
+  useEffect(() => {
+    if (currentUser?.name) {
+      setName(currentUser.name);
+    }
+  }, [currentUser?.name]);
 
   const handleCreate = async () => {
-    setLoading(true);
-    await connect();
+    // Limpa erros anteriores
+    setValidationError(null);
+    clearError();
 
-    let _me: User | null = me ? { ...me } : null;
-
-    if (_me) {
-      _me.vote = null;
-    } else {
-      _me = {
-        id: crypto.randomUUID().toString(),
-        name,
-        vote: null,
-      };
+    // Valida o nome
+    const validation = validateUserName(name);
+    if (!validation.isValid) {
+      setValidationError(validation.error!);
+      return;
     }
-    setMe(_me);
 
-    const newRoom = await createRoom(name);
-    //await joinRoom(newRoom.id);
-    if (newRoom.id) {
-      navigate(`/refatorado-room/${newRoom.id}`);
-    }
-    setLoading(false);
+    // Sanitiza o nome e cria a sala
+    const sanitizedName = sanitizeUserName(name);
+    await createNewRoom(sanitizedName);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !isCreating) {
       handleCreate();
+    }
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newName = e.target.value;
+    setName(newName);
+
+    // Limpa erro de validação quando o usuário começa a digitar
+    if (validationError) {
+      setValidationError(null);
     }
   };
 
@@ -64,6 +77,17 @@ export const HomeContent = () => {
           </div>
 
           <div className="home-form">
+            {/* Exibe erros de validação */}
+            {validationError && (
+              <div className="error-message">
+                <span className="error-icon">⚠️</span>
+                {validationError}
+              </div>
+            )}
+
+            {/* Exibe erros de criação de sala */}
+            {error && <ErrorAlert message={error} onClose={clearError} />}
+
             <div className="home-input-group">
               <label htmlFor="name" className="home-label">
                 Seu nome
@@ -73,25 +97,29 @@ export const HomeContent = () => {
                 type="text"
                 placeholder="Digite seu nome"
                 value={name}
-                onChange={e => setName(e.target.value)}
+                onChange={handleNameChange}
                 onKeyPress={handleKeyPress}
-                className="input home-input"
+                disabled={isCreating}
+                className={`input home-input ${validationError ? 'input-error' : ''}`}
+                maxLength={50}
               />
             </div>
+
             <button
               onClick={handleCreate}
-              disabled={!name.trim() || loading}
+              disabled={!name.trim() || isCreating}
               className="btn btn-primary btn-lg home-create-btn"
             >
-              {loading ? (
+              {isCreating ? (
                 <>
                   <span className="animate-spin">⏳ </span>
                   Criando sala...
                 </>
               ) : (
-                <>Criar Nova Sala</>
+                <>🚀 Criar Nova Sala</>
               )}
             </button>
+
             <div className="home-help-text">
               <p>
                 Ou entre em uma sala existente através do link compartilhado
