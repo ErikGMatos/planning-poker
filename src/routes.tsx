@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 
-import { WebsocketProvider } from './planning-rooms/context/WebsocketContext';
-import { PlanningHome } from './planning-rooms/pages/Home/Home';
-import { PlanningRoom } from './planning-rooms/pages/Room/Room';
+import { WebsocketProvider } from '@/planning-rooms/context/WebsocketContext';
+import { PlanningHome } from '@/planning-rooms/pages/Home/Home';
+import { PlanningRoom } from '@/planning-rooms/pages/Room/Room';
 // import { Home } from './planning-rooms-liveblocks/Home/Home';
 // import { Room } from './planning-rooms-liveblocks/Room/Room';
 

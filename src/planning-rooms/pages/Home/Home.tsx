@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { ErrorAlert } from '../../components/ErrorAlert';
-import { useRoomCreation } from '../../hooks/useRoomCreation';
-import { useUserManagement } from '../../hooks/useUserManagement';
-import { validateUserName, sanitizeUserName } from '../../utils/validation';
+import { ErrorAlert } from '@/planning-rooms/components/ErrorAlert';
+import { useRoomCreation } from '@/planning-rooms/hooks/useRoomCreation';
+import { useUserManagement } from '@/planning-rooms/hooks/useUserManagement';
+import {
+  validateUserName,
+  sanitizeUserName,
+} from '@/planning-rooms/utils/validation';
 
 import './Home.css';
 

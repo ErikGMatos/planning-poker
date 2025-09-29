@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useUserManagement } from './useUserManagement';
-import { useWebsocket } from './useWebsocket';
+import { useUserManagement } from '@/planning-rooms/hooks/useUserManagement';
+import { useWebsocket } from '@/planning-rooms/hooks/useWebsocket';
 
 /**
  * Hook para gerenciar a criação de salas

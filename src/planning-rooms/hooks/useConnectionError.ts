@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import { useWebsocket } from './useWebsocket';
+import { useWebsocket } from '@/planning-rooms/hooks/useWebsocket';
 
 /**
  * Hook para gerenciar erros de conexão

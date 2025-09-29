@@ -1,10 +1,13 @@
 import { HubConnectionState } from '@microsoft/signalr';
 import React, { useState, useCallback, useEffect, type ReactNode } from 'react';
 
-import SimpleWebsocketService from '../services/WebsocketService';
-import { type Room, type User, SocketMethods } from '../types/types';
-
-import { WebsocketContext } from './WebsocketContextInstance';
+import { WebsocketContext } from '@/planning-rooms/context/WebsocketContextInstance';
+import SimpleWebsocketService from '@/planning-rooms/services/WebsocketService';
+import {
+  type Room,
+  type User,
+  SocketMethods,
+} from '@/planning-rooms/types/types';
 
 // localStorage keys
 const LS_ROOM = 'ws_room';

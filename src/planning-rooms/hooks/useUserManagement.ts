@@ -1,8 +1,7 @@
 import { useCallback } from 'react';
 
-import { type User } from '../types/types';
-
-import { useWebsocket } from './useWebsocket';
+import { useWebsocket } from '@/planning-rooms/hooks/useWebsocket';
+import { type User } from '@/planning-rooms/types/types';
 
 /**
  * Hook para gerenciar o estado do usuário
