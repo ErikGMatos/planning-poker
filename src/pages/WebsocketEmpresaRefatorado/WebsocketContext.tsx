@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HubConnectionState } from '@microsoft/signalr';
 import React, { useState, useCallback, useEffect, type ReactNode } from 'react';
 
@@ -26,27 +25,29 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, [room]);
 
-  const getMe = (): User | null => {
-    const _user = JSON.parse(localStorage.getItem(LS_ME) || 'null')
+  const getMe = useCallback((): User | null => {
+    const _user = JSON.parse(localStorage.getItem(LS_ME) || 'null');
     return _user;
-  }
+  }, []);
 
-  const setUser = (user: User | null) => {
+  const setUser = useCallback((user: User | null) => {
     localStorage.setItem(LS_ME, JSON.stringify(user));
-  }
+  }, []);
 
   const setupListeners = useCallback(() => {
-    const conn = (SimpleWebsocketService as any).connection;
-    if (!conn) return;
+    // Remove listeners existentes antes de adicionar novos
+    SimpleWebsocketService.removeAllListeners();
 
-    conn.on(SocketMethods.UserChanged, setRoom);
-    conn.on(SocketMethods.Voted, setRoom);
-    conn.on(SocketMethods.Revealed, setRoom);
-    conn.on(SocketMethods.Reseted, (updated: Room) => {
+    // Adiciona os listeners
+    SimpleWebsocketService.on(SocketMethods.UserChanged, setRoom);
+    SimpleWebsocketService.on(SocketMethods.Voted, setRoom);
+    SimpleWebsocketService.on(SocketMethods.Revealed, setRoom);
+    SimpleWebsocketService.on(SocketMethods.Reseted, (updated: Room) => {
       setRoom(updated);
     });
 
-    conn.onreconnected(async () => {
+    // Configura listeners de reconexão
+    SimpleWebsocketService.on('onreconnected', async () => {
       setIsConnected(true);
       // Usar dados do localStorage em vez do estado atual
       const savedRoom = JSON.parse(localStorage.getItem(LS_ROOM) || 'null');
@@ -57,7 +58,7 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
           await SimpleWebsocketService.joinRoom({
             roomId: savedRoom.id,
             userId: savedMe.id,
-            name: savedMe.name
+            name: savedMe.name,
           });
           if (savedMe.vote != null) {
             await SimpleWebsocketService.vote({
@@ -72,8 +73,8 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
       }
     });
 
-    conn.onclose(() => setIsConnected(false));
-  }, []);
+    SimpleWebsocketService.on('onclose', () => setIsConnected(false));
+  }, [getMe]);
 
   const connect = useCallback(async () => {
     try {
@@ -103,14 +104,17 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
     return result;
   }, []);
 
-  const joinRoom = useCallback(async (roomId: string) => {
-    const me = getMe();
-    await SimpleWebsocketService.joinRoom({
-      roomId: roomId,
-      userId: me?.id,
-      name: me?.name
-    });
-  }, []);
+  const joinRoom = useCallback(
+    async (roomId: string) => {
+      const me = getMe();
+      await SimpleWebsocketService.joinRoom({
+        roomId,
+        userId: me?.id,
+        name: me?.name,
+      });
+    },
+    [getMe]
+  );
 
   const leaveRoom = useCallback(async () => {
     const me = getMe();
@@ -119,7 +123,7 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
         roomId: room.id,
         userId: me.id,
       });
-  }, [room]);
+  }, [getMe, room]);
 
   const vote = useCallback(
     async ({
@@ -136,17 +140,19 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
         await SimpleWebsocketService.vote({ roomId, userId, vote });
       }
     },
-    [room]
+    [getMe, room]
   );
 
   const reveal = useCallback(
     async () => room && SimpleWebsocketService.reveal({ roomId: room.id }),
     [room]
   );
+
   const reset = useCallback(
     async () => room && SimpleWebsocketService.reset({ roomId: room.id }),
     [room]
   );
+
   const getState = useCallback(
     async () => SimpleWebsocketService.getState(),
     []
@@ -168,7 +174,7 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
         reset,
         getState,
         setMe: setUser,
-        setRoom: setRoom
+        setRoom,
       }}
     >
       {children}

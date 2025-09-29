@@ -1,15 +1,14 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useWebsocket } from '../useWebsocket';
-import { VotingRoom } from '../VotingRoom/VotingRoom';
-import { WebsocketProvider } from '../WebsocketContext';
 import '../../Room/Room.css';
 import type { User } from '../types';
+import { useWebsocket } from '../useWebsocket';
+import { VotingRoom } from '../VotingRoom/VotingRoom';
 
-const RoomContent: React.FC = () => {
+export const RefatoradoRoom = () => {
   const navigate = useNavigate();
-  const { joinRoom, connect, disconnect, setMe, me } = useWebsocket();
+  const { joinRoom, connect, setMe, me } = useWebsocket();
 
   const { id = '' } = useParams<{ id: string }>();
 
@@ -19,6 +18,8 @@ const RoomContent: React.FC = () => {
 
   useEffect(() => {
     const enterAutomatically = async () => {
+      if (!id) return;
+
       setLoading(true);
       try {
         await connect();
@@ -30,10 +31,12 @@ const RoomContent: React.FC = () => {
         setLoading(false);
       }
     };
-    if (me && id) {
+
+    // Se já tem usuário (vem da home), entra automaticamente
+    if (me?.name && id) {
       enterAutomatically();
     }
-  }, []);
+  }, [connect, id, joinRoom, me?.name]); // ← Apenas id como dependência
 
   const handleJoinRoom = async () => {
     if (!name.trim()) {
@@ -54,11 +57,10 @@ const RoomContent: React.FC = () => {
         _me = {
           id: crypto.randomUUID().toString(),
           name,
-          vote: null
+          vote: null,
         };
       }
       setMe(_me);
-      debugger
       await joinRoom(id);
 
       setReady(true);
@@ -154,13 +156,5 @@ const RoomContent: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
-
-export const RefatoradoRoom: React.FC = () => {
-  return (
-    <WebsocketProvider>
-      <RoomContent />
-    </WebsocketProvider>
   );
 };
