@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import '../../VotingRoom/VotingRoom.css';
-import { ErrorAlert } from '../components/ErrorAlert';
-import { useConnectionError } from '../hooks/useConnectionError';
-import { useWebsocket } from '../hooks/useWebsocket';
-import { RoomStatus } from '../types';
+import '../../../VotingRoom/VotingRoom.css';
+import { ErrorAlert } from '../../components/ErrorAlert';
+import { useConnectionError } from '../../hooks/useConnectionError';
+import { useWebsocket } from '../../hooks/useWebsocket';
+import { RoomStatus } from '../../types/types';
 
 const MAX_PARTICIPANTS = 10;
 

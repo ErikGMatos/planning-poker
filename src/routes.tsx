@@ -1,7 +1,7 @@
 import React, { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { WebsocketProvider } from './pages/WebsocketEmpresaRefatorado/WebsocketContext';
+import { WebsocketProvider } from './pages/planning-rooms/context/WebsocketContext';
 
 const Home = lazy(() =>
   import('./pages/Home/Home').then(module => ({ default: module.Home }))
@@ -9,14 +9,14 @@ const Home = lazy(() =>
 const Room = lazy(() =>
   import('./pages/Room/Room').then(module => ({ default: module.Room }))
 );
-const WebsocketEmpresaRefatorado = lazy(() =>
-  import('./pages/WebsocketEmpresaRefatorado/Home/Home').then(module => ({
-    default: module.HomeContent,
+const PlanningHome = lazy(() =>
+  import('./pages/planning-rooms/pages/Home/Home').then(module => ({
+    default: module.PlanningHome,
   }))
 );
-const RefatoradoRoom = lazy(() =>
-  import('./pages/WebsocketEmpresaRefatorado/Room/Room').then(module => ({
-    default: module.RefatoradoRoom,
+const PlanningRoom = lazy(() =>
+  import('./pages/planning-rooms/pages/Room/Room').then(module => ({
+    default: module.PlanningRoom,
   }))
 );
 
@@ -26,8 +26,8 @@ export const RoutesApp: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/room/:id" element={<Room />} />
-        <Route path="/refatorado" element={<WebsocketEmpresaRefatorado />} />
-        <Route path="/refatorado-room/:id" element={<RefatoradoRoom />} />
+        <Route path="/planning" element={<PlanningHome />} />
+        <Route path="/planning/room/:id" element={<PlanningRoom />} />
       </Routes>
     </WebsocketProvider>
   );

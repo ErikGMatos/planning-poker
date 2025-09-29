@@ -1,6 +1,6 @@
 import { type HubConnectionState } from '@microsoft/signalr';
 
-import { type Room, type User } from './types';
+import type { Room, User } from '../types/types';
 
 export interface WebsocketContextType {
   room: Room | null;

@@ -6,7 +6,7 @@ import {
   HubConnectionState,
 } from '@microsoft/signalr';
 
-import { SocketMethods, type Room } from './types';
+import { SocketMethods, type Room } from '../types/types';
 
 class SimpleWebsocketService {
   private connection: HubConnection | null = null;

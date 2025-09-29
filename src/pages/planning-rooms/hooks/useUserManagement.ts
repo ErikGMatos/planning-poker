@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { type User } from '../types';
+import { type User } from '../types/types';
 
 import { useWebsocket } from './useWebsocket';
 

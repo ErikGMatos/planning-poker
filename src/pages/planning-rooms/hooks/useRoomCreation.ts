@@ -39,7 +39,7 @@ export const useRoomCreation = () => {
 
         // 4. Navegar para a sala criada
         if (newRoom?.id) {
-          navigate(`/refatorado-room/${newRoom.id}`);
+          navigate(`/planning/room/${newRoom.id}`);
         } else {
           throw new Error('Falha ao criar sala - ID não encontrado');
         }

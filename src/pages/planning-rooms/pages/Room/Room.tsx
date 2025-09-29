@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import '../../Room/Room.css';
-import { ErrorAlert } from '../components/ErrorAlert';
-import { useConnectionError } from '../hooks/useConnectionError';
-import { useWebsocket } from '../hooks/useWebsocket';
-import type { User } from '../types';
+import '../../../Room/Room.css';
+import { ErrorAlert } from '../../components/ErrorAlert';
+import { useConnectionError } from '../../hooks/useConnectionError';
+import { useWebsocket } from '../../hooks/useWebsocket';
+import type { User } from '../../types/types';
 import { VotingRoom } from '../VotingRoom/VotingRoom';
 
-export const RefatoradoRoom = () => {
+export const PlanningRoom = () => {
   const navigate = useNavigate();
   const { joinRoom, connect, setMe, me } = useWebsocket();
   const { connectionError, clearError, executeWithErrorHandling } =
@@ -109,7 +109,7 @@ export const RefatoradoRoom = () => {
             <h2 className="room-error-title">Erro</h2>
             <p className="room-error-message">ID da sala inválido</p>
             <button
-              onClick={() => navigate('/refatorado')}
+              onClick={() => navigate('/planning')}
               className="btn btn-primary room-error-btn"
             >
               Voltar ao Início
@@ -186,7 +186,7 @@ export const RefatoradoRoom = () => {
 
             <div className="room-back-link">
               <button
-                onClick={() => navigate('/refatorado')}
+                onClick={() => navigate('/planning')}
                 className="room-back-btn"
               >
                 ← Voltar ao início
