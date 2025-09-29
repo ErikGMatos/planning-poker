@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import '../../../planning-rooms-liveblocks/Room/Room.css';
 import { ErrorAlert } from '../../components/ErrorAlert';
 import { useConnectionError } from '../../hooks/useConnectionError';
 import { useWebsocket } from '../../hooks/useWebsocket';
 import type { User } from '../../types/types';
 import { VotingRoom } from '../VotingRoom/VotingRoom';
+import './Room.css';
 
 export const PlanningRoom = () => {
   const navigate = useNavigate();
