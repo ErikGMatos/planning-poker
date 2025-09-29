@@ -1,33 +1,21 @@
-import React, { lazy } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
 
-import { WebsocketProvider } from './pages/planning-rooms/context/WebsocketContext';
-
-const Home = lazy(() =>
-  import('./pages/Home/Home').then(module => ({ default: module.Home }))
-);
-const Room = lazy(() =>
-  import('./pages/Room/Room').then(module => ({ default: module.Room }))
-);
-const PlanningHome = lazy(() =>
-  import('./pages/planning-rooms/pages/Home/Home').then(module => ({
-    default: module.PlanningHome,
-  }))
-);
-const PlanningRoom = lazy(() =>
-  import('./pages/planning-rooms/pages/Room/Room').then(module => ({
-    default: module.PlanningRoom,
-  }))
-);
+import { WebsocketProvider } from './planning-rooms/context/WebsocketContext';
+import { PlanningHome } from './planning-rooms/pages/Home/Home';
+import { PlanningRoom } from './planning-rooms/pages/Room/Room';
+// import { Home } from './planning-rooms-liveblocks/Home/Home';
+// import { Room } from './planning-rooms-liveblocks/Room/Room';
 
 export const RoutesApp: React.FC = () => {
   return (
     <WebsocketProvider>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/room/:id" element={<Room />} />
+        {/* <Route path="/" element={<Home />} />
+        <Route path="/room/:id" element={<Room />} /> */}
         <Route path="/planning" element={<PlanningHome />} />
         <Route path="/planning/room/:id" element={<PlanningRoom />} />
+        <Route path="*" element={<Navigate to="/planning" />} />
       </Routes>
     </WebsocketProvider>
   );

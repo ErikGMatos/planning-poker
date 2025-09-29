@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import '../../../Room/Room.css';
+import '../../../planning-rooms-liveblocks/Room/Room.css';
 import { ErrorAlert } from '../../components/ErrorAlert';
 import { useConnectionError } from '../../hooks/useConnectionError';
 import { useWebsocket } from '../../hooks/useWebsocket';

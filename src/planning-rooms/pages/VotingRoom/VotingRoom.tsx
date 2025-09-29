@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import '../../../VotingRoom/VotingRoom.css';
+import '../../../planning-rooms-liveblocks/VotingRoom/VotingRoom.css';
 import { ErrorAlert } from '../../components/ErrorAlert';
 import { useConnectionError } from '../../hooks/useConnectionError';
 import { useWebsocket } from '../../hooks/useWebsocket';

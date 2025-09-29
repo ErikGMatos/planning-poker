@@ -5,7 +5,7 @@ import { useRoomCreation } from '../../hooks/useRoomCreation';
 import { useUserManagement } from '../../hooks/useUserManagement';
 import { validateUserName, sanitizeUserName } from '../../utils/validation';
 
-import '../../../Home/Home.css';
+import '../../../planning-rooms-liveblocks/Home/Home.css';
 
 export const PlanningHome = () => {
   const { isCreating, error, createNewRoom, clearError, clearCurrentRoom } =
