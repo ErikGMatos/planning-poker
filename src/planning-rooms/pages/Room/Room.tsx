@@ -16,7 +16,7 @@ export const PlanningRoom = () => {
 
   const { id = '' } = useParams<{ id: string }>();
 
-  const [name, setName] = useState('');
+  const [name, setName] = useState(me?.name || '');
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
   const [joinError, setJoinError] = useState<string | null>(null);
