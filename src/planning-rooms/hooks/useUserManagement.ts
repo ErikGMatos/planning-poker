@@ -8,7 +8,7 @@ import { type User } from '@/planning-rooms/types/types';
  * Centraliza a lógica de criação e atualização do usuário
  */
 export const useUserManagement = () => {
-  const { me, setMe } = useWebsocket();
+  const { me } = useWebsocket();
 
   /**
    * Prepara os dados do usuário para uma nova sessão
@@ -36,27 +36,7 @@ export const useUserManagement = () => {
     [me]
   );
 
-  /**
-   * Atualiza o usuário no contexto
-   */
-  const updateUser = useCallback(
-    (user: User) => {
-      setMe(user);
-    },
-    [setMe]
-  );
-
-  /**
-   * Limpa os dados do usuário
-   */
-  const clearUser = useCallback(() => {
-    setMe(null);
-  }, [setMe]);
-
   return {
-    currentUser: me,
     prepareUserForSession,
-    updateUser,
-    clearUser,
   };
 };

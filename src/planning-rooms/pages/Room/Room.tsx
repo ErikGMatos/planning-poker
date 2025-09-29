@@ -10,7 +10,7 @@ import './Room.css';
 
 export const PlanningRoom = () => {
   const navigate = useNavigate();
-  const { joinRoom, connect, setMe, me } = useWebsocket();
+  const { joinRoom, connect, me, setMe } = useWebsocket();
   const { connectionError, clearError, executeWithErrorHandling } =
     useConnectionError();
 

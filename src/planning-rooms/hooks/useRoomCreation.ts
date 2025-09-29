@@ -10,8 +10,8 @@ import { useWebsocket } from '@/planning-rooms/hooks/useWebsocket';
  */
 export const useRoomCreation = () => {
   const navigate = useNavigate();
-  const { connect, createRoom, setRoom } = useWebsocket();
-  const { prepareUserForSession, updateUser } = useUserManagement();
+  const { connect, createRoom, setRoom, setMe } = useWebsocket();
+  const { prepareUserForSession } = useUserManagement();
 
   const [isCreating, setIsCreating] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -32,7 +32,7 @@ export const useRoomCreation = () => {
 
         // 2. Preparar dados do usuário
         const userData = prepareUserForSession(userName);
-        updateUser(userData);
+        setMe(userData);
 
         // 3. Criar a sala
         const newRoom = await createRoom(userName);
@@ -53,14 +53,7 @@ export const useRoomCreation = () => {
         setIsCreating(false);
       }
     },
-    [
-      isCreating,
-      connect,
-      prepareUserForSession,
-      updateUser,
-      createRoom,
-      navigate,
-    ]
+    [connect, createRoom, isCreating, navigate, prepareUserForSession, setMe]
   );
 
   /**

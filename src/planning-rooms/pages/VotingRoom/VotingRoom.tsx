@@ -12,6 +12,7 @@ export const VotingRoom: React.FC = () => {
   const {
     room,
     me,
+    setMe,
     vote: doVote,
     reveal: doReveal,
     reset: doReset,
@@ -52,7 +53,6 @@ export const VotingRoom: React.FC = () => {
   // O backend já inclui o usuário atual no room.users
   // filtrar os usuarios que nao sao o usuario atual
   const allUsers = room.users;
-  const currentUserVote = room.users.find(u => u.id === me.id)?.vote;
   const votedCount = allUsers.filter(u => u.vote !== null).length;
 
   const revealedVotes = allUsers
@@ -83,10 +83,17 @@ export const VotingRoom: React.FC = () => {
   const baseOptions: (number | string)[] = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
   ];
-  const customVote = me.vote && !baseOptions.includes(me.vote) ? me.vote : null;
-  const options: (number | string)[] = customVote
-    ? [...baseOptions, customVote, 'custom']
-    : [...baseOptions, 'custom'];
+
+  // Coleta apenas os votos customizados do usuário atual
+  // Inclui votos que são maiores que 16
+  const myCustomVotes =
+    me.vote && typeof me.vote === 'number' && me.vote > 16 ? [me.vote] : [];
+
+  const options: (number | string)[] = [
+    ...baseOptions,
+    ...myCustomVotes,
+    'custom',
+  ];
 
   const handleVote = async (opt: number | string) => {
     if (opt === 'custom') {
@@ -99,6 +106,10 @@ export const VotingRoom: React.FC = () => {
         () => doVote({ userId: me.id, roomId: room.id, vote: voteValue }),
         'Falha ao votar. Verifique sua conexão.'
       );
+      // Atualiza o estado local do usuário
+      if (me) {
+        setMe({ ...me, vote: voteValue });
+      }
     }
     setShowCustomInput(false);
   };
@@ -110,6 +121,10 @@ export const VotingRoom: React.FC = () => {
         () => doVote({ userId: me.id, roomId: room.id, vote: value }),
         'Falha ao votar. Verifique sua conexão.'
       );
+      // Atualiza o estado local do usuário
+      if (me) {
+        setMe({ ...me, vote: value });
+      }
       setShowCustomInput(false);
       setCustomValue('');
     }
@@ -128,6 +143,10 @@ export const VotingRoom: React.FC = () => {
       () => doReset({ roomId: room.id }),
       'Falha ao resetar votação. Verifique sua conexão.'
     );
+    // Atualiza o estado local do usuário
+    if (me) {
+      setMe({ ...me, vote: null });
+    }
   };
 
   const copyRoomLink = async () => {
@@ -185,7 +204,7 @@ export const VotingRoom: React.FC = () => {
                   <button
                     key={opt}
                     onClick={() => handleVote(opt)}
-                    className={`vote-option-btn ${currentUserVote === +opt ? 'selected' : ''}`}
+                    className={`vote-option-btn ${me.vote === +opt ? 'selected' : ''}`}
                   >
                     {opt === 'custom' ? '✏️' : opt}
                   </button>

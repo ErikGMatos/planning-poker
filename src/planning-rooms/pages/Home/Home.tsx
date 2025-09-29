@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
+import { useWebsocket } from '../../hooks/useWebsocket';
+
 import { ErrorAlert } from '@/planning-rooms/components/ErrorAlert';
 import { useRoomCreation } from '@/planning-rooms/hooks/useRoomCreation';
-import { useUserManagement } from '@/planning-rooms/hooks/useUserManagement';
 import {
   validateUserName,
   sanitizeUserName,
 } from '@/planning-rooms/utils/validation';
-
 import './Home.css';
 
 export const PlanningHome = () => {
   const { isCreating, error, createNewRoom, clearError, clearCurrentRoom } =
     useRoomCreation();
-  const { currentUser } = useUserManagement();
-  const [name, setName] = useState(currentUser?.name || '');
+  const { me } = useWebsocket();
+  const [name, setName] = useState(me?.name || '');
   const [validationError, setValidationError] = useState<string | null>(null);
 
   // Limpa a sala atual quando o componente monta
@@ -24,10 +24,10 @@ export const PlanningHome = () => {
 
   // Atualiza o nome quando o usuário atual mudar
   useEffect(() => {
-    if (currentUser?.name) {
-      setName(currentUser.name);
+    if (me?.name) {
+      setName(me.name);
     }
-  }, [currentUser?.name]);
+  }, [me?.name]);
 
   const handleCreate = async () => {
     // Limpa erros anteriores
