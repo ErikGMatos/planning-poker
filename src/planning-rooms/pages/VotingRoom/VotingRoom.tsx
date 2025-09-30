@@ -50,9 +50,8 @@ export const VotingRoom: React.FC = () => {
     );
   }
 
-  // O backend já inclui o usuário atual no room.users
-  // filtrar os usuarios que nao sao o usuario atual
   const allUsers = room.users;
+  const currentVoteFromServer = allUsers.find(u => u.id === me.id)?.vote;
   const votedCount = allUsers.filter(u => u.vote !== null).length;
 
   const revealedVotes = allUsers
@@ -87,7 +86,11 @@ export const VotingRoom: React.FC = () => {
   // Coleta apenas os votos customizados do usuário atual
   // Inclui votos que são maiores que 16
   const myCustomVotes =
-    me.vote && typeof me.vote === 'number' && me.vote > 16 ? [me.vote] : [];
+    currentVoteFromServer &&
+    typeof currentVoteFromServer === 'number' &&
+    currentVoteFromServer > 16
+      ? [currentVoteFromServer]
+      : [];
 
   const options: (number | string)[] = [
     ...baseOptions,
@@ -161,6 +164,58 @@ export const VotingRoom: React.FC = () => {
 
   const reveal = room.status === RoomStatus.Voted;
 
+  // Se a sala estiver cheia OU se a conexão falhou, mostra aviso
+  // Não esta funcionando
+  // Talvez fazer essa chcagem de sala cheia no backend la no Room antes de chegar aqui
+  // if (isRoomFull || !isConnected) {
+  //   const isConnectionIssue = !isConnected && !isRoomFull;
+
+  //   return (
+  //     <div className="gradient-bg voting-room-container">
+  //       <div className="voting-room-content">
+  //         <div
+  //           className="card card-shadow"
+  //           style={{ maxWidth: '28rem', margin: '0 auto', textAlign: 'center' }}
+  //         >
+  //           <h2
+  //             style={{
+  //               fontSize: '1.5rem',
+  //               fontWeight: '600',
+  //               color: '#f87171',
+  //               marginBottom: '1rem',
+  //             }}
+  //           >
+  //             {isConnectionIssue ? '🔌 Problema de Conexão' : '🚫 Sala Lotada'}
+  //           </h2>
+  //           <p style={{ color: '#cbd5e1', marginBottom: '1rem' }}>
+  //             {isConnectionIssue
+  //               ? 'Não foi possível conectar à sala. Isso pode indicar que a sala está lotada ou há problemas de rede.'
+  //               : `Esta sala já atingiu o limite máximo de ${MAX_PARTICIPANTS} participantes.`}
+  //           </p>
+  //           <p
+  //             style={{
+  //               color: '#94a3b8',
+  //               fontSize: '0.875rem',
+  //               marginBottom: '1.5rem',
+  //             }}
+  //           >
+  //             {isConnectionIssue
+  //               ? 'Verifique sua conexão ou tente novamente em alguns instantes.'
+  //               : 'Tente novamente mais tarde ou crie uma nova sala.'}
+  //           </p>
+  //           <button
+  //             onClick={() => navigate('/')}
+  //             className="btn btn-primary btn-lg"
+  //             style={{ width: '100%' }}
+  //           >
+  //             🏠 Voltar ao Início
+  //           </button>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
   return (
     <div className="gradient-bg voting-room-container">
       <div className="voting-room-content">
@@ -204,7 +259,7 @@ export const VotingRoom: React.FC = () => {
                   <button
                     key={opt}
                     onClick={() => handleVote(opt)}
-                    className={`vote-option-btn ${me.vote === +opt ? 'selected' : ''}`}
+                    className={`vote-option-btn ${currentVoteFromServer === +opt ? 'selected' : ''}`}
                   >
                     {opt === 'custom' ? '✏️' : opt}
                   </button>
