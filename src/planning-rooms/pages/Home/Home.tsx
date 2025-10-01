@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useWebsocket } from '../../hooks/useWebsocket';
 
+import LogoWebPoker from '@/assets/logo-web-theme.svg?react';
 import { ErrorAlert } from '@/planning-rooms/components/ErrorAlert';
 import { useRoomCreation } from '@/planning-rooms/hooks/useRoomCreation';
 import {
@@ -67,7 +68,8 @@ export const PlanningHome = () => {
       <div className="home-content">
         {/* Header */}
         <div className="home-header">
-          <h1 className="home-title">Planning Poker</h1>
+          <LogoWebPoker className="home-logo" />
+          <h1 className="home-title">WebPoker</h1>
         </div>
 
         {/* Main Card */}

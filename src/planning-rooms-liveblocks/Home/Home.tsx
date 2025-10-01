@@ -49,7 +49,7 @@ export const Home: React.FC = () => {
       <div className="home-content">
         {/* Header */}
         <div className="home-header">
-          <h1 className="home-title">Planning Poker</h1>
+          <h1 className="home-title">WebPoker</h1>
         </div>
 
         {/* Main Card */}

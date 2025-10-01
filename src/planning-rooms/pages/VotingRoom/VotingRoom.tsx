@@ -4,6 +4,8 @@ import { ErrorAlert } from '../../components/ErrorAlert';
 import { useConnectionError } from '../../hooks/useConnectionError';
 import { useWebsocket } from '../../hooks/useWebsocket';
 import { RoomStatus } from '../../types/types';
+
+import LogoWebPoker from '@/assets/logo-web-theme.svg?react';
 import './VotingRoom.css';
 
 const MAX_PARTICIPANTS = 10;
@@ -229,7 +231,10 @@ export const VotingRoom: React.FC = () => {
         {/* Header */}
         <div className="voting-room-header">
           <div>
-            <h1 className="voting-room-title">Planning Poker</h1>
+            <div className="voting-room-logo-container">
+              <LogoWebPoker className="voting-room-logo" />
+              <h1 className="voting-room-title">WebPoker</h1>
+            </div>
             <p className="voting-room-subtitle">
               Olá, <span className="user-name">{me.name}</span>! Escolha sua
               estimativa.
@@ -361,29 +366,41 @@ export const VotingRoom: React.FC = () => {
             </div>
 
             {/* Results */}
-            {reveal && revealedVotes.length > 0 && (
+            {reveal && (
               <div className="card results-card">
                 <h3 className="results-title">Resultados da Votação</h3>
-                <div className="results-grid">
-                  {average && (
-                    <div className="result-item average">
-                      <div className="result-value average">{average}</div>
-                      <div className="result-label average">Média</div>
+                {revealedVotes.length > 0 ? (
+                  <div className="results-grid">
+                    {average && (
+                      <div className="result-item average">
+                        <div className="result-value average">{average}</div>
+                        <div className="result-label average">Média</div>
+                      </div>
+                    )}
+                    {minVote !== null && (
+                      <div className="result-item min">
+                        <div className="result-value min">📉 {minVote}</div>
+                        <div className="result-label min">Menor</div>
+                      </div>
+                    )}
+                    {maxVote !== null && (
+                      <div className="result-item max">
+                        <div className="result-value max">📈 {maxVote}</div>
+                        <div className="result-label max">Maior</div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="no-votes-message">
+                    <div className="no-votes-text">
+                      <p>Nenhum voto foi computado</p>
+                      <p className="no-votes-subtitle">
+                        Os participantes precisam votar antes de revelar os
+                        resultados
+                      </p>
                     </div>
-                  )}
-                  {minVote !== null && (
-                    <div className="result-item min">
-                      <div className="result-value min">📉 {minVote}</div>
-                      <div className="result-label min">Menor</div>
-                    </div>
-                  )}
-                  {maxVote !== null && (
-                    <div className="result-item max">
-                      <div className="result-value max">📈 {maxVote}</div>
-                      <div className="result-label max">Maior</div>
-                    </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             )}
           </div>

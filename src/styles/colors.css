@@ -1,0 +1,176 @@
+/* WebPoker - Design System Colors (Webmotors) */
+
+:root {
+  /* Brand Colors - Primary (Red) */
+  --ds-colors-brand-primary-mediumdark: #a91b35;
+  --ds-colors-brand-primary-medium: #e22446;
+  --ds-colors-brand-primary-soft: #f191a2;
+  --ds-colors-brand-primary-light: #f8c8d1;
+  --ds-colors-brand-primary-lighter: #fbe4e8;
+  --ds-colors-brand-primary-dark: #711223;
+  --ds-colors-brand-primary-darker: #390912;
+
+  /* Brand Colors - Complementary (Blue) */
+  --ds-colors-complementary-primary-darker: #161630;
+  --ds-colors-complementary-primary-dark: #2c2c60;
+  --ds-colors-complementary-primary-mediumdark: #42428f;
+  --ds-colors-complementary-primary-medium: #5858bf;
+  --ds-colors-complementary-primary-soft: #ababdf;
+  --ds-colors-complementary-primary-light: #d5d5ef;
+  --ds-colors-complementary-primary-lighter: #eaeaf7;
+
+  /* Neutral Colors - Low (Dark) */
+  --ds-colors-neutral-low-darker: #1f1f2c;
+  --ds-colors-neutral-low-dark: #2e2e3a;
+  --ds-colors-neutral-low-medium: #6a6977;
+  --ds-colors-neutral-low-light: #8e8e9c;
+  --ds-colors-neutral-low-lighter: #b5b5c2;
+  --ds-colors-neutral-medium-light: #aeaeba;
+
+  /* Neutral Colors - High (Light) */
+  --ds-colors-neutral-high-darker: #cdcddb;
+  --ds-colors-neutral-high-dark: #dcdce9;
+  --ds-colors-neutral-high-medium: #e9e9f5;
+  --ds-colors-neutral-high-light: #f7f7ff;
+  --ds-colors-neutral-high-lighter: #fff;
+
+  /* Support Colors - Critical (Red) */
+  --ds-colors-support-critical-darker: #39170e;
+  --ds-colors-support-critical-dark: #732e1d;
+  --ds-colors-support-critical-mediumdark: #ac452b;
+  --ds-colors-support-critical-medium: #e55c39;
+  --ds-colors-support-critical-soft: #ef9882;
+  --ds-colors-support-critical-light: #f7cbc0;
+  --ds-colors-support-critical-lighter: #fbe5df;
+
+  /* Support Colors - Success (Green) */
+  --ds-colors-support-success-darker: #0a2616;
+  --ds-colors-support-success-dark: #134d2c;
+  --ds-colors-support-success-medium: #269957;
+  --ds-colors-support-success-mediumdark: #1d7341;
+  --ds-colors-support-success-soft: #89c7a3;
+  --ds-colors-support-success-light: #c3e3d1;
+  --ds-colors-support-success-lighter: #e1f1e7;
+
+  /* Support Colors - Warning (Yellow) */
+  --ds-colors-support-warning-darker: #3f2f03;
+  --ds-colors-support-warning-dark: #7e5d07;
+  --ds-colors-support-warning-medium: #fbba0d;
+  --ds-colors-support-warning-mediumdark: #bc8b0a;
+  --ds-colors-support-warning-soft: #fcc942;
+  --ds-colors-support-warning-light: #fdd877;
+  --ds-colors-support-warning-lighter: #feebb9;
+
+  /* Support Colors - Informative (Blue) */
+  --ds-colors-support-informative-darker: #062a32;
+  --ds-colors-support-informative-dark: #0b5364;
+  --ds-colors-support-informative-mediumdark: #117d95;
+  --ds-colors-support-informative-medium: #16a6c7;
+  --ds-colors-support-informative-soft: #71c9dd;
+  --ds-colors-support-informative-light: #b7e3ee;
+  --ds-colors-support-informative-lighter: #daf1f6;
+
+  /* Transparent Colors - Low */
+  --ds-colors-transparent-neutral-low-semiopaque: rgb(46 45 55 / 80%);
+  --ds-colors-transparent-neutral-low-intense: rgb(46 45 55 / 64%);
+  --ds-colors-transparent-neutral-low-medium: rgb(46 45 55 / 48%);
+  --ds-colors-transparent-neutral-low-light: rgb(46 45 55 / 24%);
+
+  /* Transparent Colors - High */
+  --ds-colors-transparent-neutral-high-semiopaque: rgb(255 255 255 / 80%);
+  --ds-colors-transparent-neutral-high-intense: rgb(255 255 255 / 64%);
+  --ds-colors-transparent-neutral-high-medium: rgb(255 255 255 / 48%);
+  --ds-colors-transparent-neutral-high-light: rgb(255 255 255 / 24%);
+
+  /* Theme Variables - Light Theme (Default) */
+  --theme-bg-primary: var(--ds-colors-neutral-high-lighter);
+  --theme-bg-secondary: var(--ds-colors-neutral-high-light);
+  --theme-bg-tertiary: var(--ds-colors-neutral-high-medium);
+  --theme-text-primary: var(--ds-colors-neutral-low-darker);
+  --theme-text-secondary: var(--ds-colors-neutral-low-dark);
+  --theme-text-tertiary: var(--ds-colors-neutral-low-medium);
+  --theme-border-primary: var(--ds-colors-neutral-high-dark);
+  --theme-border-secondary: var(--ds-colors-neutral-high-darker);
+  --theme-accent-primary: var(--ds-colors-brand-primary-medium);
+  --theme-accent-secondary: var(--ds-colors-complementary-primary-medium);
+  --theme-success: var(--ds-colors-support-success-medium);
+  --theme-warning: var(--ds-colors-support-warning-medium);
+  --theme-error: var(--ds-colors-support-critical-medium);
+  --theme-info: var(--ds-colors-support-informative-medium);
+}
+
+/* Dark Theme Variables */
+[data-theme='dark'] {
+  --theme-bg-primary: var(--ds-colors-neutral-low-darker);
+  --theme-bg-secondary: var(--ds-colors-neutral-low-dark);
+  --theme-bg-tertiary: var(--ds-colors-neutral-low-medium);
+  --theme-text-primary: var(--ds-colors-neutral-high-lighter);
+  --theme-text-secondary: var(--ds-colors-neutral-high-medium);
+  --theme-text-tertiary: var(--ds-colors-neutral-low-light);
+  --theme-border-primary: var(--ds-colors-neutral-low-medium);
+  --theme-border-secondary: var(--ds-colors-neutral-low-light);
+  --theme-accent-primary: var(--ds-colors-brand-primary-medium);
+  --theme-accent-secondary: var(--ds-colors-complementary-primary-medium);
+  --theme-success: var(--ds-colors-support-success-medium);
+  --theme-warning: var(--ds-colors-support-warning-medium);
+  --theme-error: var(--ds-colors-support-critical-medium);
+  --theme-info: var(--ds-colors-support-informative-medium);
+}
+
+/* Utility Classes for Colors */
+.text-brand-primary {
+  color: var(--ds-colors-brand-primary-medium);
+}
+.text-brand-secondary {
+  color: var(--ds-colors-complementary-primary-medium);
+}
+.text-success {
+  color: var(--ds-colors-support-success-medium);
+}
+.text-warning {
+  color: var(--ds-colors-support-warning-medium);
+}
+.text-error {
+  color: var(--ds-colors-support-critical-medium);
+}
+.text-info {
+  color: var(--ds-colors-support-informative-medium);
+}
+
+.bg-brand-primary {
+  background-color: var(--ds-colors-brand-primary-medium);
+}
+.bg-brand-secondary {
+  background-color: var(--ds-colors-complementary-primary-medium);
+}
+.bg-success {
+  background-color: var(--ds-colors-support-success-medium);
+}
+.bg-warning {
+  background-color: var(--ds-colors-support-warning-medium);
+}
+.bg-error {
+  background-color: var(--ds-colors-support-critical-medium);
+}
+.bg-info {
+  background-color: var(--ds-colors-support-informative-medium);
+}
+
+.border-brand-primary {
+  border-color: var(--ds-colors-brand-primary-medium);
+}
+.border-brand-secondary {
+  border-color: var(--ds-colors-complementary-primary-medium);
+}
+.border-success {
+  border-color: var(--ds-colors-support-success-medium);
+}
+.border-warning {
+  border-color: var(--ds-colors-support-warning-medium);
+}
+.border-error {
+  border-color: var(--ds-colors-support-critical-medium);
+}
+.border-info {
+  border-color: var(--ds-colors-support-informative-medium);
+}

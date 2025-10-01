@@ -1,6 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 
 import './App.css';
+import { ThemeToggle } from './components/ThemeToggle';
 import { RoutesApp } from './routes';
 
 export const App: React.FC = () => {
@@ -12,6 +13,7 @@ export const App: React.FC = () => {
       }}
     >
       <RoutesApp />
+      <ThemeToggle />
     </BrowserRouter>
   );
 };

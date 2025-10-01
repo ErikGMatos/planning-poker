@@ -188,7 +188,7 @@ export const VotingRoom: React.FC = () => {
         {/* Header */}
         <div className="voting-room-header">
           <div>
-            <h1 className="voting-room-title">Planning Poker</h1>
+            <h1 className="voting-room-title">WebPoker</h1>
             <p className="voting-room-subtitle">
               Olá, <span className="user-name">{presence.name}</span>! Escolha
               sua estimativa.
