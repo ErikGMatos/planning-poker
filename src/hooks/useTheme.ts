@@ -10,15 +10,7 @@ export const useTheme = () => {
       return savedTheme;
     }
 
-    // Verifica a preferência do sistema
-    if (
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    ) {
-      return 'dark';
-    }
-
-    // Default para light
+    // Default sempre para light (ignora preferência do sistema)
     return 'light';
   });
 
