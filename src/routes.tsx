@@ -15,7 +15,7 @@ export const RoutesApp: React.FC = () => {
         <Route path="/room/:id" element={<Room />} /> */}
         <Route path="/planning" element={<PlanningHome />} />
         <Route path="/planning/room/:id" element={<PlanningRoom />} />
-        <Route path="*" element={<Navigate to="/planning" />} />
+        <Route path="*" element={<Navigate to="/planning" replace />} />
       </Routes>
     </WebsocketProvider>
   );

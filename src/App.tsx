@@ -7,6 +7,7 @@ import { RoutesApp } from './routes';
 export const App: React.FC = () => {
   return (
     <BrowserRouter
+      basename="/PlanningPoker"
       future={{
         v7_relativeSplatPath: true,
         v7_startTransition: true,
