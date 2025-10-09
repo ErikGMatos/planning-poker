@@ -36,6 +36,7 @@ export default tseslint.config([
           fixStyle: 'inline-type-imports',
         },
       ],
+      'object-shorthand': ['error', 'always'],
       'import/order': [
         'error',
         {

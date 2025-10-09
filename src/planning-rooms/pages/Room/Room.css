@@ -1,0 +1,184 @@
+.room-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.room-content {
+  max-width: 28rem;
+  width: 100%;
+}
+
+.room-error-card {
+  text-align: center;
+  background: var(--theme-bg-secondary);
+  border: 1px solid var(--ds-colors-support-critical-medium);
+}
+
+.room-error-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ds-colors-support-critical-medium);
+  margin-bottom: 0.5rem;
+}
+
+.room-error-message {
+  color: var(--theme-text-primary);
+  margin-bottom: 1rem;
+}
+
+.room-error-btn {
+  width: 100%;
+  background: linear-gradient(
+    135deg,
+    var(--ds-colors-support-critical-medium) 0%,
+    var(--ds-colors-support-critical-mediumdark) 100%
+  );
+  border: none;
+}
+
+.room-error-btn:hover {
+  background: linear-gradient(
+    135deg,
+    var(--ds-colors-support-critical-mediumdark) 0%,
+    var(--ds-colors-support-critical-dark) 100%
+  );
+}
+
+.room-join-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.room-join-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--theme-text-primary);
+}
+
+.room-join-subtitle {
+  color: var(--theme-text-secondary);
+}
+
+.room-id {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-weight: 600;
+  background: var(--ds-colors-brand-primary-medium);
+  color: white;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--ds-colors-brand-primary-medium);
+}
+
+.room-join-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.room-input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.room-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--theme-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.room-input {
+  text-align: center;
+  font-size: 1.125rem;
+  height: 3rem;
+  background: var(--theme-bg-tertiary);
+  border: 2px solid var(--theme-border-primary);
+  color: var(--theme-text-primary);
+}
+
+.room-input:focus {
+  border-color: var(--ds-colors-brand-primary-medium);
+  background: var(--theme-bg-secondary);
+}
+
+.room-join-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--ds-colors-brand-primary-medium);
+  border: none;
+  font-size: 1.125rem;
+  font-weight: 600;
+  height: 3.5rem;
+  transition: all 0.3s ease;
+}
+
+.room-join-btn:hover:not(:disabled) {
+  background: var(--ds-colors-brand-primary-dark);
+  transform: translateY(-2px);
+}
+
+.room-join-btn:disabled {
+  background: var(--theme-bg-tertiary);
+  color: var(--theme-text-tertiary);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.room-loading-icon {
+  display: inline-block;
+  color: var(--ds-colors-brand-primary-medium);
+}
+
+.room-back-link {
+  text-align: center;
+}
+
+.room-back-btn {
+  font-size: 0.875rem;
+  color: var(--theme-text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 0.5rem;
+}
+
+.room-back-btn:hover {
+  color: var(--theme-text-primary);
+}
+
+/* Animações específicas da Room */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.room-content {
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes pulse-blue {
+  0%,
+  100% {
+    box-shadow: 0 2px 8px rgba(226, 36, 70, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 16px rgba(226, 36, 70, 0.5);
+  }
+}
+
+/* Animação de pulsar removida */
